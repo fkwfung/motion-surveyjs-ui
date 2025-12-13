@@ -1,0 +1,101 @@
+:root {
+  --msj-font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  --msj-text: #0f172a;
+  --msj-muted: #475569;
+  --msj-border: #e2e8f0;
+  --msj-surface: #ffffff;
+  --msj-bg: #f8fafc;
+  --msj-primary: #2563eb;
+  --msj-primary-contrast: #ffffff;
+  --msj-radius: 10px;
+}
+
+.msj {
+  font-family: var(--msj-font-family);
+  color: var(--msj-text);
+}
+
+.msj__card {
+  background: var(--msj-surface);
+  border: 1px solid var(--msj-border);
+  border-radius: var(--msj-radius);
+  padding: 20px;
+}
+
+.msj__title {
+  font-size: 20px;
+  font-weight: 650;
+  margin: 0 0 16px;
+}
+
+.msj__question {
+  margin: 0 0 16px;
+}
+
+.msj__label {
+  display: block;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.msj__hint {
+  color: var(--msj-muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.msj__error {
+  color: #b91c1c;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.msj__input,
+.msj__select,
+.msj__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--msj-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: white;
+  color: var(--msj-text);
+}
+
+.msj__textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.msj__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.msj__button {
+  border: 1px solid var(--msj-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: white;
+  color: var(--msj-text);
+  cursor: pointer;
+}
+
+.msj__button--primary {
+  border-color: var(--msj-primary);
+  background: var(--msj-primary);
+  color: var(--msj-primary-contrast);
+}
+
+.msj__choiceList {
+  display: grid;
+  gap: 8px;
+}
+
+.msj__choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,0 +1,6 @@
+@import './style.css';
+
+body {
+  margin: 0;
+  background: var(--msj-bg);
+}
