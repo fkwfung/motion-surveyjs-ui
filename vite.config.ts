@@ -14,7 +14,12 @@ export default defineConfig({
       fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: (id) =>
+        id === 'react' ||
+        id === 'react-dom' ||
+        id === 'survey-core' ||
+        id.startsWith('@radix-ui/') ||
+        id.startsWith('motion'),
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) return 'style.css'

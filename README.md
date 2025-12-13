@@ -16,6 +16,8 @@ import { MotionSurvey } from 'motion-surveyjs-ui'
 export function App() {
   return (
     <MotionSurvey
+      theme="modern"
+      animate
       json={{
         title: 'Feedback',
         pages: [
@@ -30,6 +32,9 @@ export function App() {
   )
 }
 ```
+
+- UI primitives: Radix UI
+- Animations/transitions: motion.dev
 
 > If you prefer explicit CSS loading, you can also import: `motion-surveyjs-ui/styles.css`.
 

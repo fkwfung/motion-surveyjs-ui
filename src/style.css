@@ -11,6 +11,34 @@
   --msj-radius: 10px;
 }
 
+.msj--theme-modern {
+}
+
+.msj--theme-business {
+  --msj-primary: #1d4ed8;
+  --msj-bg: #f3f4f6;
+}
+
+.msj--theme-school {
+  --msj-primary: #0f766e;
+  --msj-bg: #fffbeb;
+}
+
+.msj--theme-fashion {
+  --msj-primary: #be185d;
+  --msj-bg: #fff1f2;
+}
+
+.msj--theme-cyber {
+  --msj-text: #e2e8f0;
+  --msj-muted: #94a3b8;
+  --msj-border: rgba(148, 163, 184, 0.25);
+  --msj-surface: rgba(2, 6, 23, 0.92);
+  --msj-bg: #020617;
+  --msj-primary: #22d3ee;
+  --msj-primary-contrast: #020617;
+}
+
 .msj {
   font-family: var(--msj-font-family);
   color: var(--msj-text);
@@ -98,4 +126,82 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.msj__labelInline {
+  font-weight: 600;
+}
+
+.msj__checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--msj-border);
+  border-radius: 4px;
+  background: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msj__checkboxIndicator {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--msj-primary);
+}
+
+.msj__radioItem {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--msj-border);
+  border-radius: 999px;
+  background: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msj__radioIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--msj-primary);
+}
+
+.msj__selectTrigger {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--msj-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: white;
+  color: var(--msj-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.msj__selectIcon {
+  color: var(--msj-muted);
+}
+
+.msj__selectContent {
+  background: var(--msj-surface);
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.msj__selectViewport {
+  padding: 6px;
+}
+
+.msj__selectItem {
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.msj__selectItem[data-highlighted] {
+  background: color-mix(in srgb, var(--msj-primary) 16%, transparent);
 }
