@@ -20,6 +20,11 @@ export function ImagePickerElement({ question, opts }: { question: Question; opt
     isMulti ? (Array.isArray(question.value) ? (question.value as unknown[]) : []) : [question.value]
   )
 
+  const hoverBg = {
+    rest: { opacity: 0 },
+    hover: { opacity: 1 },
+  }
+
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
@@ -49,8 +54,17 @@ export function ImagePickerElement({ question, opts }: { question: Question; opt
                 setQuestionValue(question, Array.from(next))
               }}
               layout
+              initial="rest"
+              whileHover={selected ? undefined : 'hover'}
               transition={{ duration: opts.duration }}
             >
+              {!selected ? (
+                <motion.span
+                  className="msj__imagePickerHoverBg"
+                  variants={hoverBg}
+                  transition={{ type: 'spring', stiffness: 700, damping: 45 }}
+                />
+              ) : null}
               {selected ? (
                 <motion.span
                   className="msj__imagePickerItemBg"

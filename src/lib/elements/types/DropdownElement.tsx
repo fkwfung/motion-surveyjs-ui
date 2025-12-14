@@ -25,6 +25,10 @@ export function DropdownElement({
   const EMPTY = '__msj-empty__'
   const currentStr = q.value == null ? EMPTY : String(q.value)
 
+  const selectedChoice = choices.find((c) => String(c.value) === currentStr)
+  const displayText =
+    currentStr === EMPTY ? opts.t('selectPlaceholder') : (selectedChoice?.text ?? currentStr)
+
   const [open, setOpen] = useState(false)
 
   return (
@@ -48,7 +52,9 @@ export function DropdownElement({
         }}
       >
         <Select.Trigger className="msj__selectTrigger" aria-label={title}>
-          <Select.Value placeholder={opts.t('selectPlaceholder')} />
+          <Select.Value className={currentStr === EMPTY ? 'msj__selectValue msj__selectValue--placeholder' : 'msj__selectValue'}>
+            {displayText}
+          </Select.Value>
           <Select.Icon className="msj__selectIcon">▾</Select.Icon>
         </Select.Trigger>
 

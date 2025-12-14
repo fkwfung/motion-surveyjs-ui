@@ -34,11 +34,21 @@ export function SignaturePadElement({ question, opts }: { question: Question; op
 
     const getPos = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect()
-      return { x: e.clientX - r.left, y: e.clientY - r.top }
+      const scaleX = canvas.width / r.width
+      const scaleY = canvas.height / r.height
+      return {
+        x: (e.clientX - r.left) * scaleX,
+        y: (e.clientY - r.top) * scaleY,
+      }
     }
 
     const onDown = (e: PointerEvent) => {
       drawing.current = true
+      try {
+        canvas.setPointerCapture(e.pointerId)
+      } catch {
+        // ignore
+      }
       const p = getPos(e)
       ctx.beginPath()
       ctx.moveTo(p.x, p.y)
