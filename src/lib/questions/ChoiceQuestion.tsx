@@ -3,6 +3,7 @@ import * as Checkbox from '@radix-ui/react-checkbox'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'motion/react'
 import { BaseQuestion } from '../ui/BaseQuestion'
+import { Checkmark } from '../ui/Checkmark'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -63,14 +64,28 @@ export function ChoiceQuestion({
                   ) : null}
                   <span className="msj__choiceOptionContent">
                     <span className="msj__radioItem">
-                      <RadioGroup.Indicator asChild>
+                      <RadioGroup.Indicator forceMount asChild>
                         <motion.span
                           className="msj__radioIndicator"
-                          initial={{ scale: 0.4, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: opts.duration }}
+                          initial={false}
+                          animate={selected ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                          transition={
+                            selected
+                              ? { type: 'spring', stiffness: 900, damping: 45 }
+                              : { duration: Math.max(0.12, opts.duration * 0.4) }
+                          }
                         />
                       </RadioGroup.Indicator>
+
+                      {selected ? (
+                        <motion.span
+                          key={`${valueStr}-pulse`}
+                          className="msj__radioPulse"
+                          initial={{ scale: 0.8, opacity: 0.28 }}
+                          animate={{ scale: 2.2, opacity: 0 }}
+                          transition={{ duration: Math.max(0.22, opts.duration * 1.4) }}
+                        />
+                      ) : null}
                     </span>
                     <span>{text}</span>
                   </span>
@@ -123,14 +138,14 @@ export function ChoiceQuestion({
                     setQuestionValue(q, Array.from(next))
                   }}
                 >
-                  <Checkbox.Indicator asChild>
+                  <Checkbox.Indicator forceMount asChild>
                     <motion.span
                       className="msj__checkboxIndicator"
-                      initial={{ scale: 0.4, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: opts.duration }}
+                      initial={false}
+                      animate={checked ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                      transition={{ duration: Math.max(0.12, opts.duration * 0.5) }}
                     >
-                      ✓
+                      <Checkmark active={checked} duration={Math.max(0.22, opts.duration * 1.2)} />
                     </motion.span>
                   </Checkbox.Indicator>
                 </Checkbox.Root>

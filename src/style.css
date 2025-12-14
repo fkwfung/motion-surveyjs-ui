@@ -180,6 +180,7 @@
   background: color-mix(in srgb, var(--msj-primary) 4%, transparent);
   opacity: 0;
   transition: opacity 120ms ease;
+  pointer-events: none;
 }
 
 .msj__choiceOption:hover::before {
@@ -205,6 +206,7 @@
   border-radius: inherit;
   background: color-mix(in srgb, var(--msj-primary) 14%, transparent);
   opacity: 1;
+  pointer-events: none;
 }
 
 .msj__choiceOptionContent {
@@ -233,9 +235,14 @@
 }
 
 .msj__checkboxIndicator {
-  font-size: 12px;
-  line-height: 1;
   color: var(--msj-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msj__checkmark {
+  display: block;
 }
 
 .msj__radioItem {
@@ -248,6 +255,7 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
+  position: relative;
 }
 
 .msj__radioIndicator {
@@ -255,6 +263,17 @@
   height: 10px;
   border-radius: 999px;
   background: var(--msj-primary);
+}
+
+.msj__radioPulse {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--msj-primary);
+  opacity: 0.25;
 }
 
 .msj__selectTrigger {

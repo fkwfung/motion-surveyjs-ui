@@ -1,6 +1,8 @@
 import type { Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
+import { motion } from 'motion/react'
 import { BaseQuestion } from '../ui/BaseQuestion'
+import { Checkmark } from '../ui/Checkmark'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -25,7 +27,20 @@ export function BooleanQuestion({
           checked={Boolean(q.value)}
           onCheckedChange={(v) => setQuestionValue(q, v === true)}
         >
-          <Checkbox.Indicator className="msj__checkboxIndicator">✓</Checkbox.Indicator>
+          <Checkbox.Indicator forceMount asChild>
+            <motion.span
+              className="msj__checkboxIndicator"
+              initial={false}
+              animate={
+                q.value
+                  ? { opacity: 1, scale: [0.9, 1.1, 1] }
+                  : { opacity: 0, scale: 0.9 }
+              }
+              transition={{ duration: Math.max(0.18, opts.duration * 0.7) }}
+            >
+              <Checkmark active={Boolean(q.value)} duration={Math.max(0.22, opts.duration * 1.2)} />
+            </motion.span>
+          </Checkbox.Indicator>
         </Checkbox.Root>
         <span className="msj__labelInline">
           {title}
