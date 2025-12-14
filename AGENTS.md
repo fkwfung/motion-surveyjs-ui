@@ -86,6 +86,21 @@ LLM agents working in this codebase should follow the guidelines below to keep c
 - `motion/react` `useInView` relies on `IntersectionObserver`.
 - JSDOM does not provide it by default; keep the polyfill in `src/setupTests.ts`.
 
+## Unit testing guidelines (required for new features)
+
+- Test runner: **Vitest** (`npm run test`) with **React Testing Library**.
+- Add new UI behavior tests under `src/lib/__tests__/` grouped by feature (e.g. `navigation.test.tsx`, `numbering.test.tsx`).
+- When implementing any SurveyJS JSON parameter from `schema/surveyjs_definition.json`:
+  1) add at least one unit test asserting the DOM behavior for that parameter,
+  2) prefer accessibility-first assertions (`getByRole`, `getByLabelText`, `getByText`) over brittle selectors,
+  3) avoid snapshot tests for whole pages.
+- For motion.dev animations, do **not** test frame-by-frame visuals; instead assert stateful outputs:
+  - element presence/absence
+  - classes / data-state attributes
+  - error state (`.msj__question--invalid`) and error text
+- Keep tests deterministic: avoid timers unless required; use `user-event` for interactions.
+- If you add new supported enum values/defaults for implemented parameters, also update or add a schema-alignment test (see `schemaAlignment.test.ts`).
+
 ## Styling architecture (CSS variables + overrides)
 
 - Prefer CSS custom properties for theming/overrides; avoid hardcoding colors in components.
