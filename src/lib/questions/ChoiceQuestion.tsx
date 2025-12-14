@@ -99,7 +99,11 @@ export function ChoiceQuestion({
           const checked = set.has(value)
 
           return (
-            <label key={valueStr} className="msj__choiceOption">
+            <label
+              key={valueStr}
+              className="msj__choiceOption"
+              data-state={checked ? 'checked' : 'unchecked'}
+            >
               <motion.span
                 className="msj__choiceOptionBg"
                 aria-hidden

@@ -147,6 +147,30 @@
   text-align: left;
 }
 
+/* Hover feedback (distinct from selected state) */
+.msj__choiceOption::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* Keep hover noticeably lighter than selected state */
+  background: color-mix(in srgb, var(--msj-primary) 4%, transparent);
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.msj__choiceOption:hover::before {
+  opacity: 0.8;
+}
+
+.msj__choiceOption[data-state='checked']:hover::before {
+  opacity: 0;
+}
+
+.msj__choiceOption:hover {
+  border-color: color-mix(in srgb, var(--msj-primary) 18%, var(--msj-border));
+}
+
 .msj__choiceOption:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--msj-primary) 40%, transparent);
   outline-offset: 2px;
