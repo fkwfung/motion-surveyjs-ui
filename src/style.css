@@ -122,10 +122,51 @@
   gap: 8px;
 }
 
+.msj__choiceList .msj__choice {
+  margin: 0;
+}
+
 .msj__choice {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.msj__choiceOption {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  background: white;
+  color: var(--msj-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.msj__choiceOption:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--msj-primary) 40%, transparent);
+  outline-offset: 2px;
+}
+
+.msj__choiceOptionBg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--msj-primary) 14%, transparent);
+  opacity: 1;
+}
+
+.msj__choiceOptionContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .msj__labelInline {
@@ -141,6 +182,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
 }
 
 .msj__checkboxIndicator {
@@ -158,6 +200,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
 }
 
 .msj__radioIndicator {

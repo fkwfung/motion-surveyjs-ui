@@ -1,7 +1,7 @@
 import type { ChoiceItem, Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import * as RadioGroup from '@radix-ui/react-radio-group'
-import * as Label from '@radix-ui/react-label'
+import { motion } from 'motion/react'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -42,13 +42,39 @@ export function ChoiceQuestion({
           {choices.map((c) => {
             const valueStr = String(c.value)
             const text = c.text ?? valueStr
+            const selected = currentStr === valueStr
+            const bgLayoutId = `msj-radio-bg-${q.id}`
+
             return (
-              <Label.Root key={valueStr} className="msj__choice">
-                <RadioGroup.Item value={valueStr} className="msj__radioItem">
-                  <RadioGroup.Indicator className="msj__radioIndicator" />
-                </RadioGroup.Item>
-                <span>{text}</span>
-              </Label.Root>
+              <RadioGroup.Item key={valueStr} value={valueStr} asChild>
+                <motion.button
+                  type="button"
+                  className="msj__choiceOption"
+                  layout
+                  transition={{ duration: opts.duration }}
+                >
+                  {selected ? (
+                    <motion.span
+                      className="msj__choiceOptionBg"
+                      layoutId={bgLayoutId}
+                      transition={{ type: 'spring', stiffness: 700, damping: 40 }}
+                    />
+                  ) : null}
+                  <span className="msj__choiceOptionContent">
+                    <span className="msj__radioItem">
+                      <RadioGroup.Indicator asChild>
+                        <motion.span
+                          className="msj__radioIndicator"
+                          initial={{ scale: 0.4, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: opts.duration }}
+                        />
+                      </RadioGroup.Indicator>
+                    </span>
+                    <span>{text}</span>
+                  </span>
+                </motion.button>
+              </RadioGroup.Item>
             )
           })}
         </RadioGroup.Root>
@@ -73,20 +99,38 @@ export function ChoiceQuestion({
           const checked = set.has(value)
 
           return (
-            <label key={valueStr} className="msj__choice">
-              <Checkbox.Root
-                className="msj__checkbox"
-                checked={checked}
-                onCheckedChange={(v) => {
-                  const next = new Set(Array.isArray(q.value) ? q.value : [])
-                  if (v === true) next.add(value)
-                  else next.delete(value)
-                  setQuestionValue(q, Array.from(next))
-                }}
-              >
-                <Checkbox.Indicator className="msj__checkboxIndicator">✓</Checkbox.Indicator>
-              </Checkbox.Root>
-              <span>{text}</span>
+            <label key={valueStr} className="msj__choiceOption">
+              <motion.span
+                className="msj__choiceOptionBg"
+                aria-hidden
+                animate={{ opacity: checked ? 1 : 0 }}
+                transition={{ duration: opts.duration }}
+              />
+
+              <span className="msj__choiceOptionContent">
+                <Checkbox.Root
+                  className="msj__checkbox"
+                  checked={checked}
+                  onCheckedChange={(v) => {
+                    const next = new Set(Array.isArray(q.value) ? q.value : [])
+                    if (v === true) next.add(value)
+                    else next.delete(value)
+                    setQuestionValue(q, Array.from(next))
+                  }}
+                >
+                  <Checkbox.Indicator asChild>
+                    <motion.span
+                      className="msj__checkboxIndicator"
+                      initial={{ scale: 0.4, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: opts.duration }}
+                    >
+                      ✓
+                    </motion.span>
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+                <span>{text}</span>
+              </span>
             </label>
           )
         })}
