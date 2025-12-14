@@ -26,15 +26,23 @@ LLM agents working in this codebase should follow the guidelines below to keep c
 ## Repository structure
 
 - `src/index.ts` — library entrypoint (exports + CSS import)
-- `src/lib/*` — library components
-- `src/style.css` — exported library stylesheet
+- `src/lib/MotionSurvey.tsx` — top-level renderer (SurveyJS model orchestration + page transitions)
+- `src/lib/questions/*` — per-question renderers + `renderQuestion` dispatcher
+- `src/lib/ui/*` — shared UI building blocks (motion wrappers, error UI, types)
+  - `BaseQuestion` is the standard wrapper for question content
+- `src/style.css` — exported library stylesheet (CSS variables + component classes)
 - `src/App.tsx` — demo app (not part of library API)
-- `vite.config.ts` — library build config (externalizes React)
+- `vite.config.ts` — library build config (externalizes React + survey-core + Radix + motion)
 - `tsconfig.build.json` — emits type declarations into `dist/`
 
 ## Build & packaging rules
 
 - React and ReactDOM must remain **peerDependencies** and externalized in bundling.
+- Keep these as externals in the library build (do not bundle into dist):
+  - `react`, `react-dom`
+  - `survey-core`
+  - `@radix-ui/*`
+  - `motion/*` (motion.dev)
 - Library output is expected in `dist/`:
   - `dist/index.js` (ESM)
   - `dist/index.cjs` (CJS)
@@ -51,6 +59,50 @@ LLM agents working in this codebase should follow the guidelines below to keep c
 - Accessibility is required:
   - Use semantic controls (`label` + `htmlFor`, keyboard-operable inputs)
   - Ensure required fields and errors are conveyed in an accessible way
+
+## Rendering architecture (Radix UI + motion.dev)
+
+### Question renderers
+
+- Each SurveyJS question type should be implemented as an individual renderer in `src/lib/questions/`.
+- Add the mapping in `src/lib/questions/renderQuestion.tsx`.
+- Prefer reusing shared UI blocks from `src/lib/ui/*`.
+
+### BaseQuestion wrapper (scroll / in-view transitions)
+
+- All question renderers should wrap their content with `BaseQuestion` to standardize:
+  - Motion reveal-on-scroll behavior (`useInView` from `motion/react`)
+  - Consistent DOM structure for styling overrides (`.msj__question` / `.msj__questionInner`)
+- Any changes to reveal timing/behavior should happen in `BaseQuestion` first, not in each question renderer.
+
+### Choice option animations
+
+- Choice-based inputs (radio/checkbox) should use motion.dev layout animations where possible:
+  - Selected highlight should be a moving element (layoutId) where appropriate.
+  - Hover state must remain visually distinct from selected state.
+
+### Test environment note
+
+- `motion/react` `useInView` relies on `IntersectionObserver`.
+- JSDOM does not provide it by default; keep the polyfill in `src/setupTests.ts`.
+
+## Styling architecture (CSS variables + overrides)
+
+- Prefer CSS custom properties for theming/overrides; avoid hardcoding colors in components.
+- Keep classnames stable (public-ish surface for consumers overriding styles).
+
+Common override hooks (non-exhaustive):
+
+- Question background effects:
+  - `--msj-question-bg-image`
+  - `--msj-question-bg-opacity`
+- Choice option borders:
+  - `--msj-choice-option-border` (set to `none` to disable)
+
+When adding a new visual feature, first decide whether it can be expressed as:
+1) a CSS variable override (preferred),
+2) a new theme preset token,
+3) a new prop (only if required).
 
 ## Reasoning & decision guidelines (for future maintenance)
 
