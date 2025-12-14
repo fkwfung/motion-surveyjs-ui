@@ -11,8 +11,8 @@ function ChevronLeftIcon() {
   return (
     <svg
       className="msj__navIcon"
-      width="16"
-      height="16"
+      width="18"
+      height="18"
       viewBox="0 0 16 16"
       fill="none"
       aria-hidden
@@ -21,7 +21,7 @@ function ChevronLeftIcon() {
       <path
         d="M10 3.5 6 8l4 4.5"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -33,8 +33,8 @@ function ChevronRightIcon() {
   return (
     <svg
       className="msj__navIcon"
-      width="16"
-      height="16"
+      width="18"
+      height="18"
       viewBox="0 0 16 16"
       fill="none"
       aria-hidden
@@ -43,7 +43,7 @@ function ChevronRightIcon() {
       <path
         d="M6 3.5 10 8l-4 4.5"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

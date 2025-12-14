@@ -186,6 +186,15 @@
 .msj__navIcon {
   display: inline-block;
   flex: 0 0 auto;
+  transition: transform 160ms ease;
+}
+
+.msj__button--nav:hover .msj__navIcon {
+  transform: translateX(-1px);
+}
+
+.msj__button--navPrimary:hover .msj__navIcon {
+  transform: translateX(2px);
 }
 
 .msj__button:hover {
