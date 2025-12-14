@@ -38,7 +38,9 @@ export function App() {
 
 ## Styling overrides
 
-- Disable borders on choice options (radio/checkbox items):
+See **[STYLING-CSS-GUIDE.md](./STYLING-CSS-GUIDE.md)** for the full list of supported CSS variables and classnames.
+
+Quick example — disable borders on choice options (radio/checkbox items):
 
 ```css
 .msj {
