@@ -96,10 +96,121 @@ export function MotionSurvey({
   const page = survey.currentPage
   const questions = (page?.questions ?? []) as Question[]
 
+  const navLocation =
+    ((survey as unknown as { navigationButtonsLocation?: string }).navigationButtonsLocation as
+      | 'top'
+      | 'bottom'
+      | 'topBottom'
+      | undefined) ?? 'bottom'
+
+  const globalShowNav =
+    (survey as unknown as { showNavigationButtons?: boolean }).showNavigationButtons !== false
+
+  const pageNavVisibility =
+    (page as unknown as { navigationButtonsVisibility?: string })?.navigationButtonsVisibility ??
+    'inherit'
+
+  const showNav =
+    pageNavVisibility === 'hide'
+      ? false
+      : pageNavVisibility === 'show'
+        ? true
+        : globalShowNav
+
+  const showPrevGlobal = (survey as unknown as { showPrevButton?: boolean }).showPrevButton !== false
+  const showPrev = showNav && showPrevGlobal && !survey.isFirstPage
+  const showNext = showNav && !survey.isLastPage
+  const showComplete = showNav && survey.isLastPage
+
+  const renderNav = (position: 'top' | 'bottom') => {
+    const shouldRender = navLocation === 'topBottom' || navLocation === position
+    if (!shouldRender) return null
+
+    return (
+      <div className={position === 'top' ? 'msj__nav msj__nav--top' : 'msj__nav'}>
+        <div className="msj__navSlot msj__navSlot--left">
+          <AnimatePresence initial={false}>
+            {showPrev ? (
+              <motion.button
+                key="prev"
+                type="button"
+                className="msj__button msj__button--nav"
+                onClick={() => {
+                  survey.prevPage()
+                  forceUpdate()
+                }}
+                initial={animate ? { opacity: 0, x: -6 } : false}
+                animate={animate ? { opacity: 1, x: 0 } : undefined}
+                exit={animate ? { opacity: 0, x: -6 } : undefined}
+                transition={{ duration }}
+                whileHover={animate ? { x: -2 } : undefined}
+                whileTap={animate ? { scale: 0.98 } : undefined}
+              >
+                <span aria-hidden>← </span>
+                {t('back')}
+              </motion.button>
+            ) : null}
+          </AnimatePresence>
+        </div>
+
+        <div className="msj__navSlot msj__navSlot--center">
+          <AnimatePresence initial={false}>
+            {showComplete ? (
+              <motion.button
+                key="complete"
+                type="button"
+                className="msj__button msj__button--primary msj__button--complete"
+                onClick={() => {
+                  if (survey.validateCurrentPage()) survey.tryComplete()
+                  forceUpdate()
+                }}
+                initial={animate ? { opacity: 0, y: 6, scale: 0.98 } : false}
+                animate={animate ? { opacity: 1, y: 0, scale: 1 } : undefined}
+                exit={animate ? { opacity: 0, y: 6, scale: 0.98 } : undefined}
+                transition={{ duration }}
+                whileHover={animate ? { scale: 1.03, y: -1 } : undefined}
+                whileTap={animate ? { scale: 0.98 } : undefined}
+              >
+                {t('complete')}
+              </motion.button>
+            ) : null}
+          </AnimatePresence>
+        </div>
+
+        <div className="msj__navSlot msj__navSlot--right">
+          <AnimatePresence initial={false}>
+            {showNext ? (
+              <motion.button
+                key="next"
+                type="button"
+                className="msj__button msj__button--primary msj__button--navPrimary"
+                onClick={() => {
+                  if (survey.validateCurrentPage()) survey.nextPage()
+                  forceUpdate()
+                }}
+                initial={animate ? { opacity: 0, x: 6 } : false}
+                animate={animate ? { opacity: 1, x: 0 } : undefined}
+                exit={animate ? { opacity: 0, x: 6 } : undefined}
+                transition={{ duration }}
+                whileHover={animate ? { x: 2 } : undefined}
+                whileTap={animate ? { scale: 0.98 } : undefined}
+              >
+                {t('next')}
+                <span aria-hidden> →</span>
+              </motion.button>
+            ) : null}
+          </AnimatePresence>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={rootClassName}>
       <div className="msj__card">
         {survey.title ? <h2 className="msj__title">{survey.title}</h2> : null}
+
+        {renderNav('top')}
 
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -117,43 +228,7 @@ export function MotionSurvey({
           </motion.div>
         </AnimatePresence>
 
-        <div className="msj__actions">
-          <button
-            type="button"
-            className="msj__button"
-            disabled={survey.isFirstPage}
-            onClick={() => {
-              survey.prevPage()
-              forceUpdate()
-            }}
-          >
-            {t('back')}
-          </button>
-
-          {survey.isLastPage ? (
-            <button
-              type="button"
-              className="msj__button msj__button--primary"
-              onClick={() => {
-                if (survey.validateCurrentPage()) survey.tryComplete()
-                forceUpdate()
-              }}
-            >
-              {t('complete')}
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="msj__button msj__button--primary"
-              onClick={() => {
-                if (survey.validateCurrentPage()) survey.nextPage()
-                forceUpdate()
-              }}
-            >
-              {t('next')}
-            </button>
-          )}
-        </div>
+        {renderNav('bottom')}
       </div>
     </div>
   )

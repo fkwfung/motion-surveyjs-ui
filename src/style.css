@@ -140,10 +140,33 @@
   resize: vertical;
 }
 
-.msj__actions {
-  display: flex;
+.msj__nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   gap: 10px;
   margin-top: 14px;
+  align-items: center;
+}
+
+.msj__nav--top {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.msj__navSlot {
+  min-width: 0;
+}
+
+.msj__navSlot--left {
+  justify-self: start;
+}
+
+.msj__navSlot--center {
+  justify-self: center;
+}
+
+.msj__navSlot--right {
+  justify-self: end;
 }
 
 .msj__button {
@@ -153,6 +176,33 @@
   background: white;
   color: var(--msj-text);
   cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.msj__button:hover {
+  border-color: color-mix(in srgb, var(--msj-primary) 18%, var(--msj-border));
+}
+
+.msj__button--nav:hover {
+  background: color-mix(in srgb, var(--msj-primary) 4%, white);
+}
+
+.msj__button--navPrimary {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.msj__button--navPrimary:hover {
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.10);
+}
+
+.msj__button--complete {
+  padding-left: 18px;
+  padding-right: 18px;
+  box-shadow: 0 8px 22px rgba(2, 6, 23, 0.12);
+}
+
+.msj__button--complete:hover {
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.18);
 }
 
 .msj__button--primary {

@@ -22,6 +22,11 @@ const surveyJson = {
           title: 'Topics you care about',
           choices: ['Themes', 'Animations', 'Accessibility'],
         },
+      ],
+    },
+    {
+      name: 'page2',
+      elements: [
         { type: 'comment', name: 'notes', title: 'Notes', maxWordCount: 200 },
         { type: 'boolean', name: 'optIn', title: 'Email me updates' },
       ],
