@@ -436,3 +436,276 @@
 .msj__selectItem[data-highlighted] {
   background: color-mix(in srgb, var(--msj-primary) 16%, transparent);
 }
+
+/* ---- Additional element types ---- */
+
+.msj__html {
+  color: var(--msj-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.msj__image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--msj-border);
+}
+
+.msj__expression {
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--msj-primary) 3%, white);
+  color: var(--msj-text);
+}
+
+.msj__unsupported {
+  color: var(--msj-muted);
+  font-size: 13px;
+  padding: 10px 12px;
+  border: 1px dashed color-mix(in srgb, var(--msj-border) 80%, transparent);
+  border-radius: 10px;
+}
+
+.msj__rating {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.msj__ratingItem {
+  position: relative;
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: white;
+  cursor: pointer;
+}
+
+.msj__ratingItemBg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--msj-primary) 14%, transparent);
+}
+
+.msj__ratingItemContent {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+}
+
+.msj__multipleText {
+  display: grid;
+  gap: 10px;
+}
+
+.msj__multipleTextRow {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .msj__multipleTextRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.msj__tagbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.msj__tag {
+  border: 1px solid var(--msj-border);
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.msj__tag--active {
+  border-color: color-mix(in srgb, var(--msj-primary) 35%, var(--msj-border));
+  background: color-mix(in srgb, var(--msj-primary) 12%, white);
+}
+
+.msj__buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.msj__buttonGroupItem {
+  position: relative;
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: white;
+  cursor: pointer;
+}
+
+.msj__buttonGroupItemBg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--msj-primary) 14%, transparent);
+}
+
+.msj__buttonGroupItemContent {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+}
+
+.msj__imagePicker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.msj__imagePickerItem {
+  position: relative;
+  border: 1px solid var(--msj-border);
+  border-radius: 12px;
+  padding: 10px;
+  background: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.msj__imagePickerItemBg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--msj-primary) 12%, transparent);
+}
+
+.msj__imagePickerImg {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--msj-border);
+}
+
+.msj__imagePickerLabel {
+  display: block;
+  margin-top: 8px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.msj__ranking {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.msj__rankingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: white;
+}
+
+.msj__rankingControls {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.msj__miniButton {
+  border: 1px solid var(--msj-border);
+  background: white;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.msj__signaturePadWrap {
+  display: grid;
+  gap: 8px;
+}
+
+.msj__signaturePad {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--msj-border);
+  border-radius: 12px;
+  background: white;
+  touch-action: none;
+}
+
+.msj__panel {
+  display: grid;
+  gap: 12px;
+}
+
+.msj__panelDynamic {
+  display: grid;
+  gap: 12px;
+}
+
+.msj__panelDynamicItem {
+  border: 1px solid var(--msj-border);
+  border-radius: 12px;
+  padding: 12px;
+  background: color-mix(in srgb, var(--msj-primary) 2%, white);
+}
+
+.msj__panelDynamicHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.msj__panelDynamicTitle {
+  font-weight: 650;
+}
+
+.msj__matrix {
+  display: grid;
+  gap: 12px;
+}
+
+.msj__matrixRow {
+  border: 1px solid var(--msj-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: white;
+}
+
+.msj__matrixRowTitle {
+  font-weight: 650;
+  margin-bottom: 10px;
+}
+
+.msj__matrixRowChoices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.msj__matrixCell {
+  border: 1px solid var(--msj-border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

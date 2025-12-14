@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useReducer, useRef } from 'react'
-import { Model } from 'survey-core'
-import type { Question } from 'survey-core'
+import { useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react'
+import { Model, Question, type IElement } from 'survey-core'
 import { AnimatePresence, motion } from 'motion/react'
-import { renderQuestion } from './questions/renderQuestion'
+import { renderElement } from './elements/renderElement'
 import { createTranslator } from './i18n/messages'
 import type { Messages } from './i18n/messages'
 import type { RenderOptions } from './ui/types'
@@ -188,6 +187,8 @@ export function MotionSurvey({
 
   const page = survey.currentPage
   const questions = (page?.questions ?? []) as Question[]
+  const elements =
+    ((page as unknown as { elements?: IElement[] })?.elements ?? (questions as unknown as IElement[])) as IElement[]
   const validationSeq = validationState.pageName === (page?.name ?? null) ? validationState.seq : 0
 
   const showPageTitles = (survey as unknown as { showPageTitles?: boolean }).showPageTitles !== false
@@ -390,22 +391,55 @@ export function MotionSurvey({
                 .slice(0, survey.currentPageNo ?? 0)
                 .reduce((sum, p) => sum + ((p.questions ?? []) as Question[]).length, 0)
 
-              return questions.map((q, i) => (
-                <div key={q.name}>
-                  {renderQuestion(
-                    q,
-                    {
-                      animate,
-                      duration,
-                      t,
-                      validationSeq,
-                      questionIndex: i,
-                      globalQuestionIndex: globalStartIndex + i,
-                      showQuestionNumbers,
-                    } satisfies RenderOptions
-                  )}
-                </div>
-              ))
+              const rendered = elements.reduce(
+                (acc, el, i) => {
+                  const type =
+                    typeof (el as unknown as { getType?: () => string }).getType === 'function'
+                      ? (el as unknown as { getType: () => string }).getType()
+                      : 'unknown'
+
+                  const countForNumbering =
+                    el instanceof Question &&
+                    type !== 'html' &&
+                    type !== 'image' &&
+                    type !== 'expression' &&
+                    type !== 'empty'
+
+                  const localIndex = countForNumbering ? acc.pageQuestionIndex : -1
+                  const globalIndex = countForNumbering ? acc.globalQuestionIndex : -1
+
+                  const key = (el as unknown as { name?: string }).name ?? `${type}-${i}`
+
+                  return {
+                    items: [
+                      ...acc.items,
+                      <div key={key}>
+                        {renderElement(
+                          el,
+                          {
+                            animate,
+                            duration,
+                            t,
+                            validationSeq,
+                            questionIndex: localIndex,
+                            globalQuestionIndex: globalIndex,
+                            showQuestionNumbers,
+                          } satisfies RenderOptions
+                        )}
+                      </div>,
+                    ],
+                    pageQuestionIndex: countForNumbering ? acc.pageQuestionIndex + 1 : acc.pageQuestionIndex,
+                    globalQuestionIndex: countForNumbering ? acc.globalQuestionIndex + 1 : acc.globalQuestionIndex,
+                  }
+                },
+                {
+                  items: [] as ReactNode[],
+                  pageQuestionIndex: 0,
+                  globalQuestionIndex: globalStartIndex,
+                }
+              )
+
+              return rendered.items
             })()}
           </motion.div>
         </AnimatePresence>

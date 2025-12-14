@@ -6,6 +6,9 @@ export function getQuestionTitle(question: Question, opts: RenderOptions): strin
 
   if (opts.showQuestionNumbers === 'off') return base
 
+  if (opts.showQuestionNumbers === 'on' && opts.globalQuestionIndex < 0) return base
+  if (opts.showQuestionNumbers === 'onPage' && opts.questionIndex < 0) return base
+
   const n = opts.showQuestionNumbers === 'on' ? opts.globalQuestionIndex + 1 : opts.questionIndex + 1
   return `${n}. ${base}`
 }

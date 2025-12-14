@@ -1,7 +1,7 @@
 import type { Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { motion } from 'motion/react'
-import { BaseQuestion } from '../ui/BaseQuestion'
+import { BaseElement } from '../ui/BaseElement'
 import { getQuestionTitle } from './getQuestionTitle'
 import { Checkmark } from '../ui/Checkmark'
 import { Errors } from '../ui/Errors'
@@ -9,7 +9,7 @@ import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
 import { setQuestionValue } from './setQuestionValue'
 
-export function BooleanQuestion({
+export function BooleanElement({
   question,
   opts,
 }: {
@@ -21,7 +21,7 @@ export function BooleanQuestion({
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
 
   return (
-    <BaseQuestion question={q} opts={opts}>
+    <BaseElement element={q} opts={opts}>
       <label className="msj__choice">
         <Checkbox.Root
           className="msj__checkbox"
@@ -49,6 +49,6 @@ export function BooleanQuestion({
         </span>
       </label>
       <Errors errors={errors} opts={opts} />
-    </BaseQuestion>
+    </BaseElement>
   )
 }

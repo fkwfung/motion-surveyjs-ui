@@ -1,13 +1,13 @@
 import type { ChoiceItem, Question } from 'survey-core'
 import * as Select from '@radix-ui/react-select'
-import { BaseQuestion } from '../ui/BaseQuestion'
+import { BaseElement } from '../ui/BaseElement'
 import { getQuestionTitle } from './getQuestionTitle'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
 import { setQuestionValue } from './setQuestionValue'
 
-export function DropdownQuestion({
+export function DropdownElement({
   question,
   opts,
 }: {
@@ -20,10 +20,11 @@ export function DropdownQuestion({
   const choices =
     (q as unknown as { visibleChoices?: ChoiceItem[] }).visibleChoices ?? []
 
-  const currentStr = q.value == null ? '' : String(q.value)
+  const EMPTY = '__msj-empty__'
+  const currentStr = q.value == null ? EMPTY : String(q.value)
 
   return (
-    <BaseQuestion question={q} opts={opts}>
+    <BaseElement element={q} opts={opts}>
       <div className="msj__label">
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -32,7 +33,7 @@ export function DropdownQuestion({
       <Select.Root
         value={currentStr}
         onValueChange={(v) => {
-          if (!v) {
+          if (v === EMPTY) {
             setQuestionValue(q, undefined)
             return
           }
@@ -47,7 +48,7 @@ export function DropdownQuestion({
         <Select.Portal>
           <Select.Content className="msj__selectContent" position="popper">
             <Select.Viewport className="msj__selectViewport">
-              <Select.Item value="" className="msj__selectItem">
+              <Select.Item value={EMPTY} className="msj__selectItem">
                 <Select.ItemText>{opts.t('selectPlaceholder')}</Select.ItemText>
               </Select.Item>
               {choices.map((c) => {
@@ -64,6 +65,6 @@ export function DropdownQuestion({
       </Select.Root>
 
       <Errors errors={errors} opts={opts} />
-    </BaseQuestion>
+    </BaseElement>
   )
 }

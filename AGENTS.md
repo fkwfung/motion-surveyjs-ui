@@ -27,9 +27,9 @@ LLM agents working in this codebase should follow the guidelines below to keep c
 
 - `src/index.ts` — library entrypoint (exports + CSS import)
 - `src/lib/MotionSurvey.tsx` — top-level renderer (SurveyJS model orchestration + page transitions)
-- `src/lib/questions/*` — per-question renderers + `renderQuestion` dispatcher
+- `src/lib/elements/*` — per-element renderers + `renderElement` dispatcher
 - `src/lib/ui/*` — shared UI building blocks (motion wrappers, error UI, types)
-  - `BaseQuestion` is the standard wrapper for question content
+  - `BaseElement` is the standard wrapper for element content
 - `src/style.css` — exported library stylesheet (CSS variables + component classes)
 - `src/App.tsx` — demo app (not part of library API)
 - `vite.config.ts` — library build config (externalizes React + survey-core + Radix + motion)
@@ -62,18 +62,18 @@ LLM agents working in this codebase should follow the guidelines below to keep c
 
 ## Rendering architecture (Radix UI + motion.dev)
 
-### Question renderers
+### Element renderers
 
-- Each SurveyJS question type should be implemented as an individual renderer in `src/lib/questions/`.
-- Add the mapping in `src/lib/questions/renderQuestion.tsx`.
+- Each SurveyJS element type should be implemented as an individual renderer in `src/lib/elements/`.
+- Add the mapping in `src/lib/elements/renderElement.tsx`.
 - Prefer reusing shared UI blocks from `src/lib/ui/*`.
 
-### BaseQuestion wrapper (scroll / in-view transitions)
+### BaseElement wrapper (scroll / in-view transitions)
 
-- All question renderers should wrap their content with `BaseQuestion` to standardize:
+- All element renderers should wrap their content with `BaseElement` to standardize:
   - Motion reveal-on-scroll behavior (`useInView` from `motion/react`)
   - Consistent DOM structure for styling overrides (`.msj__question` / `.msj__questionInner`)
-- Any changes to reveal timing/behavior should happen in `BaseQuestion` first, not in each question renderer.
+- Any changes to reveal timing/behavior should happen in `BaseElement` first, not in each element renderer.
 
 ### Choice option animations
 
