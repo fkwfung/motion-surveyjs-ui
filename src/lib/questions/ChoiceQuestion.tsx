@@ -20,7 +20,7 @@ export function ChoiceQuestion({
 }) {
   const q = question
   const title = q.title || q.name
-  const errors = getQuestionErrors(q)
+  const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   const choices =
     (q as unknown as { visibleChoices?: ChoiceItem[] }).visibleChoices ?? []
 
@@ -28,7 +28,7 @@ export function ChoiceQuestion({
     const currentStr = q.value == null ? '' : String(q.value)
 
     return (
-      <BaseQuestion opts={opts}>
+      <BaseQuestion question={q} opts={opts}>
         <div className="msj__label">
           {title}
           {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -102,7 +102,7 @@ export function ChoiceQuestion({
   const set = new Set(Array.isArray(q.value) ? q.value : [])
 
   return (
-    <BaseQuestion opts={opts}>
+    <BaseQuestion question={q} opts={opts}>
       <div className="msj__label">
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}

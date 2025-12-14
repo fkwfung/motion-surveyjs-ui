@@ -17,10 +17,10 @@ export function BooleanQuestion({
 }) {
   const q = question
   const title = q.title || q.name
-  const errors = getQuestionErrors(q)
+  const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
 
   return (
-    <BaseQuestion opts={opts}>
+    <BaseQuestion question={q} opts={opts}>
       <label className="msj__choice">
         <Checkbox.Root
           className="msj__checkbox"

@@ -123,6 +123,18 @@
   margin-top: 6px;
 }
 
+.msj__question--invalid .msj__input,
+.msj__question--invalid .msj__select,
+.msj__question--invalid .msj__textarea,
+.msj__question--invalid .msj__selectTrigger {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #ef4444 18%, transparent);
+}
+
+.msj__question--invalid .msj__label {
+  color: color-mix(in srgb, var(--msj-text) 82%, #ef4444);
+}
+
 .msj__input,
 .msj__select,
 .msj__textarea {

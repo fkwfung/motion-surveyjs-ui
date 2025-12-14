@@ -9,10 +9,10 @@ import { setQuestionValue } from './setQuestionValue'
 export function TextQuestion({ question, opts }: { question: Question; opts: RenderOptions }) {
   const q = question
   const title = q.title || q.name
-  const errors = getQuestionErrors(q)
+  const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
 
   return (
-    <BaseQuestion opts={opts}>
+    <BaseQuestion question={q} opts={opts}>
       <Label.Root className="msj__label" htmlFor={q.id}>
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}

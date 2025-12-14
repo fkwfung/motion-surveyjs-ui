@@ -6,4 +6,6 @@ export type RenderOptions = {
   animate: boolean
   duration: number
   t: Translator
+  /** Increments when the user attempts to proceed and validation fails (used for invalid animations). */
+  validationSeq: number
 }

@@ -15,7 +15,7 @@ export function CommentQuestion({
 }) {
   const q = question
   const title = q.title || q.name
-  const errors = getQuestionErrors(q)
+  const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
 
   const raw = String(q.value ?? '')
 
@@ -28,7 +28,7 @@ export function CommentQuestion({
   const wordCount = words.length
 
   return (
-    <BaseQuestion opts={opts}>
+    <BaseQuestion question={q} opts={opts}>
       <Label.Root className="msj__label" htmlFor={q.id}>
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}

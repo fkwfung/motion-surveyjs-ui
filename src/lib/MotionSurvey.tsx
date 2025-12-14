@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from 'react'
+import { useEffect, useMemo, useReducer, useRef } from 'react'
 import { Model } from 'survey-core'
 import type { Question } from 'survey-core'
 import { AnimatePresence, motion } from 'motion/react'
@@ -97,6 +97,18 @@ export function MotionSurvey({
   }, [model, json, data])
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0)
+  const [validationState, dispatchValidation] = useReducer(
+    (
+      state: { pageName: string | null; seq: number },
+      action: { type: 'bump' | 'setPage'; pageName: string | null }
+    ) => {
+      if (action.type === 'setPage') return { pageName: action.pageName, seq: 0 }
+      if (state.pageName !== action.pageName) return { pageName: action.pageName, seq: 1 }
+      return { pageName: state.pageName, seq: state.seq + 1 }
+    },
+    { pageName: null, seq: 0 }
+  )
+  const pendingFocusQuestionName = useRef<string | null>(null)
 
   const duration = animationDurationMs / 1000
   const t = useMemo(() => createTranslator({ locale, messages }), [locale, messages])
@@ -110,21 +122,51 @@ export function MotionSurvey({
 
   useEffect(() => {
     const rerender = () => forceUpdate()
+    const onPageChanged = () => {
+      dispatchValidation({ type: 'setPage', pageName: survey.currentPage?.name ?? null })
+      rerender()
+    }
     const handleComplete = () => {
       onComplete?.(survey.data as Record<string, unknown>, survey)
       rerender()
     }
 
     survey.onValueChanged.add(rerender)
-    survey.onCurrentPageChanged.add(rerender)
+    survey.onCurrentPageChanged.add(onPageChanged)
     survey.onComplete.add(handleComplete)
 
     return () => {
       survey.onValueChanged.remove(rerender)
-      survey.onCurrentPageChanged.remove(rerender)
+      survey.onCurrentPageChanged.remove(onPageChanged)
       survey.onComplete.remove(handleComplete)
     }
   }, [survey, onComplete])
+
+  useEffect(() => {
+    const name = pendingFocusQuestionName.current
+    if (!name) return
+    pendingFocusQuestionName.current = null
+
+    const esc =
+      typeof window !== 'undefined' && window.CSS && typeof window.CSS.escape === 'function'
+        ? window.CSS.escape
+        : (s: string) => s.replaceAll('"', '\\"')
+
+    const wrap = document.querySelector<HTMLElement>(`[data-msj-question="${esc(name)}"]`)
+    if (!wrap) return
+
+    const focusEl = wrap.querySelector<HTMLElement>(
+      'input, textarea, select, button, [tabindex]:not([tabindex="-1"])'
+    )
+
+    try {
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    } catch {
+      wrap.scrollIntoView()
+    }
+
+    focusEl?.focus({ preventScroll: true })
+  })
 
   if (survey.state === 'completed') {
     return (
@@ -139,6 +181,7 @@ export function MotionSurvey({
 
   const page = survey.currentPage
   const questions = (page?.questions ?? []) as Question[]
+  const validationSeq = validationState.pageName === (page?.name ?? null) ? validationState.seq : 0
 
   const navLocation =
     ((survey as unknown as { navigationButtonsLocation?: string }).navigationButtonsLocation as
@@ -205,7 +248,22 @@ export function MotionSurvey({
                 type="button"
                 className="msj__button msj__button--primary msj__button--complete"
                 onClick={() => {
-                  if (survey.validateCurrentPage()) survey.tryComplete()
+                  let ok = false
+                  try {
+                    ok = survey.validateCurrentPage()
+                  } catch {
+                    ok = false
+                  }
+
+                  if (!ok) {
+                    const firstInvalid = questions.find((q) => q.hasErrors())
+                    pendingFocusQuestionName.current = firstInvalid?.name ?? null
+                    dispatchValidation({ type: 'bump', pageName: page?.name ?? null })
+                    forceUpdate()
+                    return
+                  }
+
+                  survey.tryComplete()
                   forceUpdate()
                 }}
                 initial={animate ? { opacity: 0, y: 6, scale: 0.98 } : false}
@@ -240,7 +298,22 @@ export function MotionSurvey({
                 type="button"
                 className="msj__button msj__button--primary msj__button--navPrimary"
                 onClick={() => {
-                  if (survey.validateCurrentPage()) survey.nextPage()
+                  let ok = false
+                  try {
+                    ok = survey.validateCurrentPage()
+                  } catch {
+                    ok = false
+                  }
+
+                  if (!ok) {
+                    const firstInvalid = questions.find((q) => q.hasErrors())
+                    pendingFocusQuestionName.current = firstInvalid?.name ?? null
+                    dispatchValidation({ type: 'bump', pageName: page?.name ?? null })
+                    forceUpdate()
+                    return
+                  }
+
+                  survey.nextPage()
                   forceUpdate()
                 }}
                 initial={animate ? { opacity: 0, x: 6 } : false}
@@ -277,7 +350,10 @@ export function MotionSurvey({
           >
             {questions.map((q) => (
               <div key={q.name}>
-                {renderQuestion(q, { animate, duration, t } satisfies RenderOptions)}
+                {renderQuestion(
+                  q,
+                  { animate, duration, t, validationSeq } satisfies RenderOptions
+                )}
               </div>
             ))}
           </motion.div>
