@@ -48,6 +48,7 @@ All built-in UI strings (buttons, placeholders, counters) can be customized:
 ```tsx
 <MotionSurvey
   json={...}
+  locale="en-US"
   messages={{
     back: '返回',
     next: '下一步',

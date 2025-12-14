@@ -25,6 +25,8 @@ export type MotionSurveyProps = {
   /** Built-in theme presets (CSS variables). */
   theme?: 'modern' | 'business' | 'school' | 'fashion' | 'cyber'
 
+  /** Built-in locale for internal UI text. Default: en-US (also supports en-GB). */
+  locale?: 'en-US' | 'en-GB'
   /** Override built-in UI text (buttons/placeholders/etc.) */
   messages?: Partial<Messages>
 
@@ -39,6 +41,7 @@ export function MotionSurvey({
   animate = true,
   animationDurationMs = 180,
   theme = 'modern',
+  locale = 'en-US',
   messages,
   className,
 }: MotionSurveyProps) {
@@ -52,7 +55,7 @@ export function MotionSurvey({
   const [, forceUpdate] = useReducer((x) => x + 1, 0)
 
   const duration = animationDurationMs / 1000
-  const t = useMemo(() => createTranslator({ messages }), [messages])
+  const t = useMemo(() => createTranslator({ locale, messages }), [locale, messages])
   const rootClassName = [
     'msj',
     theme ? `msj--theme-${theme}` : null,
