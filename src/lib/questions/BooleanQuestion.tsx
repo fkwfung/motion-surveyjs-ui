@@ -2,6 +2,7 @@ import type { Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { motion } from 'motion/react'
 import { BaseQuestion } from '../ui/BaseQuestion'
+import { getQuestionTitle } from './getQuestionTitle'
 import { Checkmark } from '../ui/Checkmark'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
@@ -16,7 +17,7 @@ export function BooleanQuestion({
   opts: RenderOptions
 }) {
   const q = question
-  const title = q.title || q.name
+  const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
 
   return (

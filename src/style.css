@@ -95,6 +95,26 @@
   margin-top: 4px;
 }
 
+.msj__pageHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 14px;
+}
+
+.msj__pageTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--msj-text);
+}
+
+.msj__pageNumber {
+  font-size: 12px;
+  color: var(--msj-muted);
+  white-space: nowrap;
+}
+
 .msj__textareaWrap {
   position: relative;
 }

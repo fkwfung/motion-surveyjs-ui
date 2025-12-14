@@ -91,7 +91,14 @@ export function MotionSurvey({
 }: MotionSurveyProps) {
   const survey = useMemo(() => {
     if (model) return model
-    const m = new Model(json ?? {})
+
+    const baseJson = (json ?? {}) as Record<string, unknown>
+    const patchedJson =
+      baseJson.showQuestionNumbers === undefined
+        ? { ...baseJson, showQuestionNumbers: 'onPage' }
+        : baseJson
+
+    const m = new Model(patchedJson)
     if (data) m.data = data
     return m
   }, [model, json, data])
@@ -182,6 +189,20 @@ export function MotionSurvey({
   const page = survey.currentPage
   const questions = (page?.questions ?? []) as Question[]
   const validationSeq = validationState.pageName === (page?.name ?? null) ? validationState.seq : 0
+
+  const showPageTitles = (survey as unknown as { showPageTitles?: boolean }).showPageTitles !== false
+  const showPageNumbers = (survey as unknown as { showPageNumbers?: boolean }).showPageNumbers === true
+  const rawShowQuestionNumbers = (survey as unknown as { showQuestionNumbers?: boolean | string })
+    .showQuestionNumbers
+
+  const showQuestionNumbers: 'off' | 'on' | 'onPage' =
+    rawShowQuestionNumbers === true
+      ? 'on'
+      : rawShowQuestionNumbers === false
+        ? 'off'
+        : rawShowQuestionNumbers === 'off' || rawShowQuestionNumbers === 'on' || rawShowQuestionNumbers === 'onPage'
+          ? rawShowQuestionNumbers
+          : 'onPage'
 
   const navLocation =
     ((survey as unknown as { navigationButtonsLocation?: string }).navigationButtonsLocation as
@@ -348,14 +369,44 @@ export function MotionSurvey({
             exit={animate ? { opacity: 0, y: -8 } : undefined}
             transition={{ duration }}
           >
-            {questions.map((q) => (
-              <div key={q.name}>
-                {renderQuestion(
-                  q,
-                  { animate, duration, t, validationSeq } satisfies RenderOptions
-                )}
+            {showPageTitles || showPageNumbers ? (
+              <div className="msj__pageHeader">
+                {showPageTitles && page?.title ? (
+                  <div className="msj__pageTitle">{page.title}</div>
+                ) : null}
+                {showPageNumbers ? (
+                  <div className="msj__pageNumber">
+                    {t('pageXofY', {
+                      current: (survey.currentPageNo ?? 0) + 1,
+                      total: survey.pages?.length ?? 0,
+                    })}
+                  </div>
+                ) : null}
               </div>
-            ))}
+            ) : null}
+
+            {(() => {
+              const globalStartIndex = (survey.pages ?? [])
+                .slice(0, survey.currentPageNo ?? 0)
+                .reduce((sum, p) => sum + ((p.questions ?? []) as Question[]).length, 0)
+
+              return questions.map((q, i) => (
+                <div key={q.name}>
+                  {renderQuestion(
+                    q,
+                    {
+                      animate,
+                      duration,
+                      t,
+                      validationSeq,
+                      questionIndex: i,
+                      globalQuestionIndex: globalStartIndex + i,
+                      showQuestionNumbers,
+                    } satisfies RenderOptions
+                  )}
+                </div>
+              ))
+            })()}
           </motion.div>
         </AnimatePresence>
 

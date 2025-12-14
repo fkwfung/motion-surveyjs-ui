@@ -1,6 +1,7 @@
 import type { ChoiceItem, Question } from 'survey-core'
 import * as Select from '@radix-ui/react-select'
 import { BaseQuestion } from '../ui/BaseQuestion'
+import { getQuestionTitle } from './getQuestionTitle'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -14,7 +15,7 @@ export function DropdownQuestion({
   opts: RenderOptions
 }) {
   const q = question
-  const title = q.title || q.name
+  const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   const choices =
     (q as unknown as { visibleChoices?: ChoiceItem[] }).visibleChoices ?? []

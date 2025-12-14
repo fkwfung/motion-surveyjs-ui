@@ -3,6 +3,7 @@ import * as Checkbox from '@radix-ui/react-checkbox'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'motion/react'
 import { BaseQuestion } from '../ui/BaseQuestion'
+import { getQuestionTitle } from './getQuestionTitle'
 import { Checkmark } from '../ui/Checkmark'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
@@ -19,7 +20,7 @@ export function ChoiceQuestion({
   opts: RenderOptions
 }) {
   const q = question
-  const title = q.title || q.name
+  const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   const choices =
     (q as unknown as { visibleChoices?: ChoiceItem[] }).visibleChoices ?? []

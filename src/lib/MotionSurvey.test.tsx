@@ -4,12 +4,14 @@ import { MotionSurvey } from './MotionSurvey'
 
 const json = {
   title: 'Customer feedback',
+  showPageTitles: true,
+  showPageNumbers: true,
+  showQuestionNumbers: 'onPage',
   pages: [
     {
       name: 'page1',
-      elements: [
-        { type: 'text', name: 'name', title: 'Your name', isRequired: true },
-      ],
+      title: 'Page 1 title',
+      elements: [{ type: 'text', name: 'name', title: 'Your name', isRequired: true }],
     },
   ],
 }
@@ -19,6 +21,8 @@ describe('MotionSurvey', () => {
     render(<MotionSurvey json={json} />)
 
     expect(screen.getByText('Customer feedback')).toBeInTheDocument()
-    expect(screen.getByLabelText(/Your name/)).toBeInTheDocument()
+    expect(screen.getByText('Page 1 title')).toBeInTheDocument()
+    expect(screen.getByText(/Page 1 of 1/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/1\. Your name/)).toBeInTheDocument()
   })
 })
