@@ -1,11 +1,11 @@
 import type { Question } from 'survey-core'
 import * as Label from '@radix-ui/react-label'
-import { BaseElement } from '../ui/BaseElement'
-import { getQuestionTitle } from './getQuestionTitle'
-import { Errors } from '../ui/Errors'
-import type { RenderOptions } from '../ui/types'
-import { getQuestionErrors } from './getQuestionErrors'
-import { setQuestionValue } from './setQuestionValue'
+import { BaseElement } from '../../ui/BaseElement'
+import { Errors } from '../../ui/Errors'
+import type { RenderOptions } from '../../ui/types'
+import { getQuestionTitle } from '../getQuestionTitle'
+import { getQuestionErrors } from '../getQuestionErrors'
+import { setQuestionValue } from '../setQuestionValue'
 
 export function CommentElement({
   question,

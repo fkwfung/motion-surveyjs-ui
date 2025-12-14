@@ -1,13 +1,13 @@
 import type { Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { motion } from 'motion/react'
-import { BaseElement } from '../ui/BaseElement'
-import { getQuestionTitle } from './getQuestionTitle'
-import { Checkmark } from '../ui/Checkmark'
-import { Errors } from '../ui/Errors'
-import type { RenderOptions } from '../ui/types'
-import { getQuestionErrors } from './getQuestionErrors'
-import { setQuestionValue } from './setQuestionValue'
+import { BaseElement } from '../../ui/BaseElement'
+import { Checkmark } from '../../ui/Checkmark'
+import { Errors } from '../../ui/Errors'
+import type { RenderOptions } from '../../ui/types'
+import { getQuestionTitle } from '../getQuestionTitle'
+import { getQuestionErrors } from '../getQuestionErrors'
+import { setQuestionValue } from '../setQuestionValue'
 
 export function BooleanElement({
   question,

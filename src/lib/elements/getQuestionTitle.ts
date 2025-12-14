@@ -1,8 +1,8 @@
-import type { Question } from 'survey-core'
+import type { IElement } from 'survey-core'
 import type { RenderOptions } from '../ui/types'
 
-export function getQuestionTitle(question: Question, opts: RenderOptions): string {
-  const base = question.title || question.name
+export function getQuestionTitle(element: IElement, opts: RenderOptions): string {
+  const base = ((element as unknown as { title?: string }).title ?? '') || element.name
 
   if (opts.showQuestionNumbers === 'off') return base
 

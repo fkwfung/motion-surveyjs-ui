@@ -128,6 +128,24 @@ To customize, override the option pseudo-element:
 }
 ```
 
+### 4.3 Matrix option cell borders (radio/checkbox in matrix)
+
+Matrix cells use their own border token (defaults to `none`):
+
+```css
+.msj {
+  --msj-matrix-cell-border: none;
+}
+```
+
+If you prefer borders:
+
+```css
+.msj {
+  --msj-matrix-cell-border: 1px solid var(--msj-border);
+}
+```
+
 ---
 
 ## 5) Per-question background effects (image/opacity)
@@ -182,6 +200,7 @@ These are commonly useful selectors:
 - `.msj__choiceList`
 - `.msj__choiceOption` (radio/checkbox option wrapper)
 - `.msj__selectTrigger`, `.msj__selectContent`, `.msj__selectItem`
+  - Note: the dropdown popup is rendered in a Radix `Portal`, so it uses `--msj-font-family` explicitly (it does not rely on inheriting from `.msj`).
 - `.msj__error`
 
 When overriding styles, prefer:

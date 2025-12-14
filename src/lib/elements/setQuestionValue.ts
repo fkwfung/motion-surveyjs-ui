@@ -1,5 +1,5 @@
-import type { Question } from 'survey-core'
+import type { IElement } from 'survey-core'
 
-export function setQuestionValue(question: Question, value: unknown) {
-  Reflect.set(question as object, 'value', value)
+export function setQuestionValue(element: IElement, value: unknown) {
+  Reflect.set(element as object, 'value', value)
 }

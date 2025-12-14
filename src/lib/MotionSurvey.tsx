@@ -118,6 +118,8 @@ export function MotionSurvey({
 
   const duration = animationDurationMs / 1000
   const t = useMemo(() => createTranslator({ locale, messages }), [locale, messages])
+  const portalContainerRef = useRef<HTMLDivElement | null>(null)
+
   const rootClassName = [
     'msj',
     theme ? `msj--theme-${theme}` : null,
@@ -356,7 +358,7 @@ export function MotionSurvey({
   }
 
   return (
-    <div className={rootClassName}>
+    <div className={rootClassName} ref={portalContainerRef}>
       <div className="msj__card">
         {survey.title ? <h2 className="msj__title">{survey.title}</h2> : null}
 
@@ -424,6 +426,7 @@ export function MotionSurvey({
                             questionIndex: localIndex,
                             globalQuestionIndex: globalIndex,
                             showQuestionNumbers,
+                            portalContainer: portalContainerRef.current,
                           } satisfies RenderOptions
                         )}
                       </div>,

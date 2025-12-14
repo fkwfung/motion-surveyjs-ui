@@ -49,6 +49,7 @@
   border: 1px solid var(--msj-border);
   border-radius: var(--msj-radius);
   padding: 20px;
+  overflow: visible;
 }
 
 .msj__title {
@@ -417,14 +418,22 @@
 }
 
 .msj__selectContent {
+  font-family: var(--msj-font-family);
+  color: var(--msj-text);
   background: var(--msj-surface);
   border: 1px solid var(--msj-border);
   border-radius: 10px;
   overflow: hidden;
+  z-index: 1000;
+  min-width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.14);
 }
 
 .msj__selectViewport {
   padding: 6px;
+  max-height: 260px;
+  overflow: auto;
 }
 
 .msj__selectItem {
@@ -678,7 +687,37 @@
 
 .msj__matrix {
   display: grid;
-  gap: 12px;
+  gap: 10px;
+}
+
+.msj__matrixHeader,
+.msj__matrixRow {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) repeat(var(--msj-matrix-cols, 1), minmax(46px, 1fr));
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .msj__matrixHeader,
+  .msj__matrixRow {
+    grid-template-columns: minmax(120px, 1fr) repeat(var(--msj-matrix-cols, 1), minmax(42px, 1fr));
+  }
+}
+
+.msj__matrixHeader {
+  padding: 0 2px;
+}
+
+.msj__matrixHeaderCell {
+  font-size: 12px;
+  color: var(--msj-muted);
+  font-weight: 650;
+  text-align: center;
+}
+
+.msj__matrixCorner {
+  text-align: left;
 }
 
 .msj__matrixRow {
@@ -690,22 +729,32 @@
 
 .msj__matrixRowTitle {
   font-weight: 650;
-  margin-bottom: 10px;
 }
 
 .msj__matrixRowChoices {
-  display: flex;
-  flex-wrap: wrap;
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: repeat(var(--msj-matrix-cols, 1), minmax(46px, 1fr));
   gap: 8px;
 }
 
 .msj__matrixCell {
-  border: 1px solid var(--msj-border);
+  border: var(--msj-matrix-cell-border, none);
   border-radius: 10px;
-  padding: 8px 10px;
   background: white;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  min-height: 40px;
+  padding: 6px;
+  width: 100%;
+}
+
+.msj__matrixCell[data-state='checked'] {
+  border-color: color-mix(in srgb, var(--msj-primary) 22%, var(--msj-border));
+}
+
+.msj__matrixCell:hover {
+  border-color: color-mix(in srgb, var(--msj-primary) 18%, var(--msj-border));
 }

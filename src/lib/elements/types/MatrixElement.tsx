@@ -24,8 +24,8 @@ export function MatrixElement({ question, opts }: { question: Question; opts: Re
 
   const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
-  const rows = q.visibleRows ?? []
-  const cols = q.visibleColumns ?? []
+  const rows = (q as unknown as { rows?: MatrixRow[] }).rows ?? q.visibleRows ?? []
+  const cols = (q as unknown as { columns?: MatrixColumn[] }).columns ?? q.visibleColumns ?? []
 
   const valueObj = (question.value ?? {}) as Record<string, unknown>
   const isMulti = q.cellType === 'checkbox'
@@ -37,7 +37,19 @@ export function MatrixElement({ question, opts }: { question: Question; opts: Re
         {question.isRequired ? <span aria-hidden> *</span> : null}
       </div>
 
-      <div className="msj__matrix">
+      <div className="msj__matrix" style={{ ['--msj-matrix-cols' as never]: String(cols.length) } as never}>
+        <div className="msj__matrixHeader" aria-hidden>
+          <div className="msj__matrixHeaderCell msj__matrixCorner" />
+          {cols.map((c) => {
+            const colKey = String(c.value)
+            return (
+              <div key={colKey} className="msj__matrixHeaderCell">
+                {c.text ?? colKey}
+              </div>
+            )
+          })}
+        </div>
+
         {rows.map((r) => {
           const rowKey = String(r.value)
           const rowText = r.text ?? rowKey
@@ -56,10 +68,38 @@ export function MatrixElement({ question, opts }: { question: Question; opts: Re
                 >
                   {cols.map((c) => {
                     const colKey = String(c.value)
+                    const colText = c.text ?? colKey
+                    const selected = String(valueObj[rowKey] ?? '') === colKey
                     return (
-                      <RadioGroup.Item key={colKey} value={colKey} asChild>
-                        <button type="button" className="msj__matrixCell">
-                          {c.text ?? colKey}
+                      <RadioGroup.Item key={`${rowKey}:${colKey}`} value={colKey} asChild>
+                        <button
+                          type="button"
+                          className="msj__matrixCell"
+                          aria-label={`${rowText}: ${colText}`}
+                          data-state={selected ? 'checked' : 'unchecked'}
+                        >
+                          <span className="msj__radioItem" aria-hidden>
+                            <RadioGroup.Indicator forceMount asChild>
+                              <motion.span
+                                className="msj__radioIndicator"
+                                initial={false}
+                                animate={selected ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                                transition={
+                                  selected
+                                    ? { type: 'spring', stiffness: 900, damping: 45 }
+                                    : { duration: Math.max(0.12, opts.duration * 0.4) }
+                                }
+                              />
+                            </RadioGroup.Indicator>
+                            {selected ? (
+                              <motion.span
+                                className="msj__radioPulse"
+                                initial={{ scale: 0.8, opacity: 0.28 }}
+                                animate={{ scale: 2.2, opacity: 0 }}
+                                transition={{ duration: Math.max(0.22, opts.duration * 1.4) }}
+                              />
+                            ) : null}
+                          </span>
                         </button>
                       </RadioGroup.Item>
                     )
@@ -94,7 +134,6 @@ export function MatrixElement({ question, opts }: { question: Question; opts: Re
                             </motion.span>
                           </Checkbox.Indicator>
                         </Checkbox.Root>
-                        <span>{c.text ?? colKey}</span>
                       </label>
                     )
                   })}
