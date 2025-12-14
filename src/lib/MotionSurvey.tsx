@@ -7,6 +7,50 @@ import { createTranslator } from './i18n/messages'
 import type { Messages } from './i18n/messages'
 import type { RenderOptions } from './ui/types'
 
+function ChevronLeftIcon() {
+  return (
+    <svg
+      className="msj__navIcon"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M10 3.5 6 8l4 4.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg
+      className="msj__navIcon"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M6 3.5 10 8l-4 4.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export type MotionSurveyProps = {
   /** SurveyJS JSON schema. Prefer this if you don't need to manage the model instance yourself. */
   json?: ConstructorParameters<typeof Model>[0]
@@ -146,7 +190,7 @@ export function MotionSurvey({
                 whileHover={animate ? { x: -2 } : undefined}
                 whileTap={animate ? { scale: 0.98 } : undefined}
               >
-                <span aria-hidden>← </span>
+                <ChevronLeftIcon />
                 {t('back')}
               </motion.button>
             ) : null}
@@ -167,8 +211,19 @@ export function MotionSurvey({
                 initial={animate ? { opacity: 0, y: 6, scale: 0.98 } : false}
                 animate={animate ? { opacity: 1, y: 0, scale: 1 } : undefined}
                 exit={animate ? { opacity: 0, y: 6, scale: 0.98 } : undefined}
-                transition={{ duration }}
-                whileHover={animate ? { scale: 1.03, y: -1 } : undefined}
+                transition={{
+                  duration,
+                  x: { type: 'tween', duration: 0.32, ease: 'easeInOut' },
+                  rotate: { type: 'tween', duration: 0.32, ease: 'easeInOut' },
+                }}
+                whileHover={
+                  animate
+                    ? {
+                        x: [0, -2, 2, -2, 0],
+                        rotate: [0, -1.2, 1.2, -1.2, 0],
+                      }
+                    : undefined
+                }
                 whileTap={animate ? { scale: 0.98 } : undefined}
               >
                 {t('complete')}
@@ -196,7 +251,7 @@ export function MotionSurvey({
                 whileTap={animate ? { scale: 0.98 } : undefined}
               >
                 {t('next')}
-                <span aria-hidden> →</span>
+                <ChevronRightIcon />
               </motion.button>
             ) : null}
           </AnimatePresence>

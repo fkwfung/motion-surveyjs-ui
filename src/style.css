@@ -170,6 +170,10 @@
 }
 
 .msj__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   border: 1px solid var(--msj-border);
   border-radius: 8px;
   padding: 10px 12px;
@@ -177,6 +181,11 @@
   color: var(--msj-text);
   cursor: pointer;
   transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.msj__navIcon {
+  display: inline-block;
+  flex: 0 0 auto;
 }
 
 .msj__button:hover {
