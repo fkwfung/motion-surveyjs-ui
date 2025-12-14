@@ -95,6 +95,28 @@
   margin-top: 4px;
 }
 
+.msj__textareaWrap {
+  position: relative;
+}
+
+/* Make room for the counter overlay */
+.msj__textareaWrap .msj__textarea {
+  padding-bottom: 30px;
+}
+
+.msj__counter {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  color: var(--msj-muted);
+  font-size: 12px;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--msj-surface) 85%, transparent);
+  pointer-events: none;
+}
+
 .msj__error {
   color: #b91c1c;
   font-size: 12px;

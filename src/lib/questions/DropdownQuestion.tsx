@@ -40,14 +40,14 @@ export function DropdownQuestion({
         }}
       >
         <Select.Trigger className="msj__selectTrigger" aria-label={title}>
-          <Select.Value placeholder="Select…" />
+          <Select.Value placeholder={opts.t('selectPlaceholder')} />
           <Select.Icon className="msj__selectIcon">▾</Select.Icon>
         </Select.Trigger>
         <Select.Portal>
           <Select.Content className="msj__selectContent" position="popper">
             <Select.Viewport className="msj__selectViewport">
               <Select.Item value="" className="msj__selectItem">
-                <Select.ItemText>Select…</Select.ItemText>
+                <Select.ItemText>{opts.t('selectPlaceholder')}</Select.ItemText>
               </Select.Item>
               {choices.map((c) => {
                 const valueStr = String(c.value)

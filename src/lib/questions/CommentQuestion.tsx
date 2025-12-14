@@ -17,18 +17,43 @@ export function CommentQuestion({
   const title = q.title || q.name
   const errors = getQuestionErrors(q)
 
+  const raw = String(q.value ?? '')
+
+  const maxWords =
+    (q as unknown as { maxWordCount?: number }).maxWordCount ??
+    (q as unknown as { maxWords?: number }).maxWords ??
+    200
+
+  const words = raw.trim() ? raw.trim().split(/\s+/).filter(Boolean) : []
+  const wordCount = words.length
+
   return (
     <BaseQuestion opts={opts}>
       <Label.Root className="msj__label" htmlFor={q.id}>
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
       </Label.Root>
-      <textarea
-        id={q.id}
-        className="msj__textarea"
-        value={(q.value ?? '') as string}
-        onChange={(e) => setQuestionValue(q, e.currentTarget.value)}
-      />
+      <div className="msj__textareaWrap">
+        <textarea
+          id={q.id}
+          className="msj__textarea"
+          value={raw}
+          onChange={(e) => {
+            const nextRaw = e.currentTarget.value
+            const nextWords = nextRaw.trim()
+              ? nextRaw.trim().split(/\s+/).filter(Boolean)
+              : []
+            if (nextWords.length <= maxWords) {
+              setQuestionValue(q, nextRaw)
+              return
+            }
+            setQuestionValue(q, `${nextWords.slice(0, maxWords).join(' ')} `)
+          }}
+        />
+        <div className="msj__counter">
+          {opts.t('wordCount', { count: wordCount, max: maxWords })}
+        </div>
+      </div>
       <Errors errors={errors} opts={opts} />
     </BaseQuestion>
   )

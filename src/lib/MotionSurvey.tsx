@@ -3,6 +3,8 @@ import { Model } from 'survey-core'
 import type { Question } from 'survey-core'
 import { AnimatePresence, motion } from 'motion/react'
 import { renderQuestion } from './questions/renderQuestion'
+import { createTranslator } from './i18n/messages'
+import type { Messages } from './i18n/messages'
 import type { RenderOptions } from './ui/types'
 
 export type MotionSurveyProps = {
@@ -23,6 +25,9 @@ export type MotionSurveyProps = {
   /** Built-in theme presets (CSS variables). */
   theme?: 'modern' | 'business' | 'school' | 'fashion' | 'cyber'
 
+  /** Override built-in UI text (buttons/placeholders/etc.) */
+  messages?: Partial<Messages>
+
   className?: string
 }
 
@@ -34,6 +39,7 @@ export function MotionSurvey({
   animate = true,
   animationDurationMs = 180,
   theme = 'modern',
+  messages,
   className,
 }: MotionSurveyProps) {
   const survey = useMemo(() => {
@@ -46,6 +52,7 @@ export function MotionSurvey({
   const [, forceUpdate] = useReducer((x) => x + 1, 0)
 
   const duration = animationDurationMs / 1000
+  const t = useMemo(() => createTranslator({ messages }), [messages])
   const rootClassName = [
     'msj',
     theme ? `msj--theme-${theme}` : null,
@@ -76,8 +83,8 @@ export function MotionSurvey({
     return (
       <div className={rootClassName}>
         <div className="msj__card">
-          <h2 className="msj__title">Thanks!</h2>
-          <div className="msj__hint">Your responses have been recorded.</div>
+          <h2 className="msj__title">{t('thanksTitle')}</h2>
+          <div className="msj__hint">{t('thanksHint')}</div>
         </div>
       </div>
     )
@@ -101,7 +108,7 @@ export function MotionSurvey({
           >
             {questions.map((q) => (
               <div key={q.name}>
-                {renderQuestion(q, { animate, duration } satisfies RenderOptions)}
+                {renderQuestion(q, { animate, duration, t } satisfies RenderOptions)}
               </div>
             ))}
           </motion.div>
@@ -117,7 +124,7 @@ export function MotionSurvey({
               forceUpdate()
             }}
           >
-            Back
+            {t('back')}
           </button>
 
           {survey.isLastPage ? (
@@ -129,7 +136,7 @@ export function MotionSurvey({
                 forceUpdate()
               }}
             >
-              Complete
+              {t('complete')}
             </button>
           ) : (
             <button
@@ -140,7 +147,7 @@ export function MotionSurvey({
                 forceUpdate()
               }}
             >
-              Next
+              {t('next')}
             </button>
           )}
         </div>

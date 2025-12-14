@@ -91,6 +91,7 @@ LLM agents working in this codebase should follow the guidelines below to keep c
 - Prefer CSS custom properties for theming/overrides; avoid hardcoding colors in components.
 - Keep classnames stable (public-ish surface for consumers overriding styles).
 - **If you add/rename/remove any CSS variables or change override behavior, update `STYLING-CSS-GUIDE.md` and the README link/snippets.**
+- **If you add/rename/remove any internal UI message keys (localization), update `README.md` and keep guidance in `STYLING-CSS-GUIDE.md` (Localization note) consistent.**
 
 Common override hooks (non-exhaustive):
 

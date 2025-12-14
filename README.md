@@ -10,6 +10,11 @@ npm i motion-surveyjs-ui
 
 ## Usage
 
+Comment question word count:
+- Default max word count is **200**.
+- Override per-question via `maxWordCount` (or `maxWords`) in the Survey JSON.
+
+
 ```tsx
 import { MotionSurvey } from 'motion-surveyjs-ui'
 
@@ -35,6 +40,23 @@ export function App() {
 
 - UI primitives: Radix UI
 - Animations/transitions: motion.dev
+
+## Localization
+
+All built-in UI strings (buttons, placeholders, counters) can be customized:
+
+```tsx
+<MotionSurvey
+  json={...}
+  messages={{
+    back: '返回',
+    next: '下一步',
+    complete: '提交',
+    selectPlaceholder: '请选择…',
+    wordCount: '{count}/{max} 字',
+  }}
+/>
+```
 
 ## Styling overrides
 

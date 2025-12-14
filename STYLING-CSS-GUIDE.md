@@ -38,6 +38,12 @@ Then pass a className:
 
 ---
 
+## Localization (non-CSS)
+
+This guide is CSS-focused, but note that internal UI labels are also localizable via `MotionSurvey`’s `messages` prop (buttons, dropdown placeholder, word counter).
+
+---
+
 ## 2) Theming model
 
 `MotionSurvey` renders a root element with the `msj` class and an optional theme class:
