@@ -1,5 +1,6 @@
 import type { Question } from 'survey-core'
 import * as Label from '@radix-ui/react-label'
+import { BaseQuestion } from '../ui/BaseQuestion'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -17,7 +18,7 @@ export function CommentQuestion({
   const errors = getQuestionErrors(q)
 
   return (
-    <>
+    <BaseQuestion opts={opts}>
       <Label.Root className="msj__label" htmlFor={q.id}>
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -29,6 +30,6 @@ export function CommentQuestion({
         onChange={(e) => setQuestionValue(q, e.currentTarget.value)}
       />
       <Errors errors={errors} opts={opts} />
-    </>
+    </BaseQuestion>
   )
 }

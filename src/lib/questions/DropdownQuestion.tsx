@@ -1,5 +1,6 @@
 import type { ChoiceItem, Question } from 'survey-core'
 import * as Select from '@radix-ui/react-select'
+import { BaseQuestion } from '../ui/BaseQuestion'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -21,7 +22,7 @@ export function DropdownQuestion({
   const currentStr = q.value == null ? '' : String(q.value)
 
   return (
-    <>
+    <BaseQuestion opts={opts}>
       <div className="msj__label">
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -62,6 +63,6 @@ export function DropdownQuestion({
       </Select.Root>
 
       <Errors errors={errors} opts={opts} />
-    </>
+    </BaseQuestion>
   )
 }

@@ -1,5 +1,6 @@
 import type { Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
+import { BaseQuestion } from '../ui/BaseQuestion'
 import { Errors } from '../ui/Errors'
 import type { RenderOptions } from '../ui/types'
 import { getQuestionErrors } from './getQuestionErrors'
@@ -17,7 +18,7 @@ export function BooleanQuestion({
   const errors = getQuestionErrors(q)
 
   return (
-    <>
+    <BaseQuestion opts={opts}>
       <label className="msj__choice">
         <Checkbox.Root
           className="msj__checkbox"
@@ -32,6 +33,6 @@ export function BooleanQuestion({
         </span>
       </label>
       <Errors errors={errors} opts={opts} />
-    </>
+    </BaseQuestion>
   )
 }

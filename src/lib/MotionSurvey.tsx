@@ -100,7 +100,7 @@ export function MotionSurvey({
             transition={{ duration }}
           >
             {questions.map((q) => (
-              <div key={q.name} className="msj__question">
+              <div key={q.name}>
                 {renderQuestion(q, { animate, duration } satisfies RenderOptions)}
               </div>
             ))}
