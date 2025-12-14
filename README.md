@@ -36,6 +36,16 @@ export function App() {
 - UI primitives: Radix UI
 - Animations/transitions: motion.dev
 
+## Styling overrides
+
+- Disable borders on choice options (radio/checkbox items):
+
+```css
+.msj {
+  --msj-choice-option-border: none;
+}
+```
+
 > If you prefer explicit CSS loading, you can also import: `motion-surveyjs-ui/styles.css`.
 
 ## Development
