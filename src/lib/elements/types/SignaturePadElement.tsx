@@ -14,7 +14,7 @@ export function SignaturePadElement({ question, opts }: { question: Question; op
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const drawing = useRef(false)
-  const [hasInk, setHasInk] = useState(false)
+  const [clearKey, setClearKey] = useState(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -59,7 +59,6 @@ export function SignaturePadElement({ question, opts }: { question: Question; op
       const p = getPos(e)
       ctx.lineTo(p.x, p.y)
       ctx.stroke()
-      setHasInk(true)
     }
 
     const onUp = () => {
@@ -81,7 +80,7 @@ export function SignaturePadElement({ question, opts }: { question: Question; op
       canvas.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
     }
-  }, [question])
+  }, [question, clearKey])
 
   return (
     <BaseElement element={question} opts={opts}>
@@ -92,32 +91,27 @@ export function SignaturePadElement({ question, opts }: { question: Question; op
 
       <div className="msj__signaturePadWrap">
         <motion.canvas
+          key={clearKey}
           ref={canvasRef}
           className="msj__signaturePad"
           width={560}
           height={160}
-          initial={false}
-          animate={hasInk ? { scale: 1 } : { scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
         />
-        <button
+        <motion.button
           type="button"
           className="msj__miniButton"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => {
-            const c = canvasRef.current
-            let ctx: CanvasRenderingContext2D | null = null
-            try {
-              ctx = c?.getContext('2d') ?? null
-            } catch {
-              ctx = null
-            }
-            if (!c || !ctx) return
-            ctx.clearRect(0, 0, c.width, c.height)
-            setHasInk(false)
+            setClearKey((k) => k + 1)
             setQuestionValue(question, undefined)
           }}
         >
           Clear
-        </button>
+        </motion.button>
       </div>
 
       <Errors errors={errors} opts={opts} />

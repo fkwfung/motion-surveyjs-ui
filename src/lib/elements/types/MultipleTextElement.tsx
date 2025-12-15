@@ -1,5 +1,6 @@
 import type { Question } from 'survey-core'
 import * as Label from '@radix-ui/react-label'
+import { motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
@@ -23,10 +24,16 @@ export function MultipleTextElement({ question, opts }: { question: Question; op
         {question.isRequired ? <span aria-hidden> *</span> : null}
       </div>
       <div className="msj__multipleText">
-        {items.map((it) => {
+        {items.map((it, idx) => {
           const id = `${question.id}-${it.name}`
           return (
-            <div key={it.name} className="msj__multipleTextRow">
+            <motion.div
+              key={it.name}
+              className="msj__multipleTextRow"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: idx * 0.05, duration: opts.duration }}
+            >
               <Label.Root className="msj__labelInline" htmlFor={id}>
                 {it.title ?? it.name}
               </Label.Root>
@@ -38,7 +45,7 @@ export function MultipleTextElement({ question, opts }: { question: Question; op
                   setQuestionValue(question, { ...current, [it.name]: e.currentTarget.value })
                 }}
               />
-            </div>
+            </motion.div>
           )
         })}
       </div>

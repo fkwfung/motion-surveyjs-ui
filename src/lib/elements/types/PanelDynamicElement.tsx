@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { IElement, Question } from 'survey-core'
+import { AnimatePresence, motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { getQuestionTitle } from '../getQuestionTitle'
@@ -28,24 +29,47 @@ export function PanelDynamicElement({
       <div className="msj__label">{title}</div>
 
       <div className="msj__panelDynamic">
-        {panels.map((p, idx) => (
-          <div key={(p as unknown as { name?: string }).name ?? idx} className="msj__panelDynamicItem">
-            <div className="msj__panelDynamicHeader">
-              <div className="msj__panelDynamicTitle">Item {idx + 1}</div>
-              {q.removePanel ? (
-                <button type="button" className="msj__miniButton" onClick={() => q.removePanel?.(p)}>
-                  Remove
-                </button>
-              ) : null}
-            </div>
-            {render(p as unknown as IElement, opts)}
-          </div>
-        ))}
+        <AnimatePresence mode="popLayout">
+          {panels.map((p, idx) => (
+            <motion.div
+              key={(p as unknown as { name?: string }).name ?? idx}
+              className="msj__panelDynamicItem"
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+              layout
+            >
+              <div className="msj__panelDynamicHeader">
+                <div className="msj__panelDynamicTitle">Item {idx + 1}</div>
+                {q.removePanel ? (
+                  <motion.button
+                    type="button"
+                    className="msj__miniButton"
+                    onClick={() => q.removePanel?.(p)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Remove
+                  </motion.button>
+                ) : null}
+              </div>
+              {render(p as unknown as IElement, opts)}
+            </motion.div>
+          ))}
+        </AnimatePresence>
 
         {q.addPanel ? (
-          <button type="button" className="msj__button" onClick={() => q.addPanel?.()}>
+          <motion.button
+            type="button"
+            className="msj__button"
+            onClick={() => q.addPanel?.()}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          >
             Add item
-          </button>
+          </motion.button>
         ) : null}
       </div>
     </BaseElement>

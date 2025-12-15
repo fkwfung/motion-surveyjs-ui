@@ -1,4 +1,5 @@
 import type { ChoiceItem, Question } from 'survey-core'
+import { motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
@@ -26,7 +27,7 @@ export function TagboxElement({ question, opts }: { question: Question; opts: Re
           const valueStr = String(value)
           const selected = set.has(value)
           return (
-            <button
+            <motion.button
               key={valueStr}
               type="button"
               className={selected ? 'msj__tag msj__tag--active' : 'msj__tag'}
@@ -36,9 +37,22 @@ export function TagboxElement({ question, opts }: { question: Question; opts: Re
                 else next.add(value)
                 setQuestionValue(question, Array.from(next))
               }}
+              initial={false}
+              animate={selected ? { scale: 1.02 } : { scale: 1 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             >
-              {c.text ?? valueStr}
-            </button>
+              {selected ? (
+                <motion.span
+                  className="msj__tagBg"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                />
+              ) : null}
+              <span className="msj__tagContent">{c.text ?? valueStr}</span>
+            </motion.button>
           )
         })}
       </div>
