@@ -14,4 +14,6 @@ export type RenderOptions = {
   globalQuestionIndex: number
   /** SurveyJS: 'off' | 'on' | 'onPage'. */
   showQuestionNumbers: 'off' | 'on' | 'onPage'
+  /** Where Radix portals (e.g. dropdown) should render; keeps styles/overrides scoped. */
+  portalContainer?: HTMLElement | null
 }

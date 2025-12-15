@@ -1,38 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { MotionSurvey } from './lib/MotionSurvey'
-
-const surveyJson = {
-  title: 'Motion SurveyJS UI (demo)',
-  pages: [
-    {
-      name: 'page1',
-      elements: [
-        { type: 'text', name: 'name', title: 'Your name', isRequired: true },
-        {
-          type: 'radiogroup',
-          name: 'role',
-          title: 'Your role',
-          choices: ['Developer', 'Designer', 'PM'],
-          isRequired: true,
-        },
-        {
-          type: 'checkbox',
-          name: 'topics',
-          title: 'Topics you care about',
-          choices: ['Themes', 'Animations', 'Accessibility'],
-        },
-      ],
-    },
-    {
-      name: 'page2',
-      elements: [
-        { type: 'comment', name: 'notes', title: 'Notes', maxWordCount: 200 },
-        { type: 'boolean', name: 'optIn', title: 'Email me updates' },
-      ],
-    },
-  ],
-}
+import surveyJson from './survey-data.json'
 
 function App() {
   const [result, setResult] = useState<Record<string, unknown> | null>(null)

@@ -1,19 +1,25 @@
 import { useEffect } from 'react'
-import type { Question } from 'survey-core'
+import { Question, type IElement } from 'survey-core'
 import { motion, useAnimationControls } from 'motion/react'
 import type { RenderOptions } from './types'
 
-export function BaseQuestion({
-  question,
+export function BaseElement({
+  element,
   opts,
   children,
 }: {
-  question: Question
+  element: IElement
   opts: RenderOptions
   children: React.ReactNode
 }) {
+  const isQuestion = element instanceof Question
+  const question = isQuestion ? (element as Question) : null
+
   const invalid =
-    opts.validationSeq > 0 && typeof question.hasErrors === 'function' ? question.hasErrors() : false
+    opts.validationSeq > 0 && question && typeof question.hasErrors === 'function'
+      ? question.hasErrors()
+      : false
+
   const controls = useAnimationControls()
 
   useEffect(() => {
@@ -26,10 +32,13 @@ export function BaseQuestion({
     })
   }, [controls, invalid, opts.animate, opts.validationSeq])
 
+  const elementName = (element as unknown as { name?: string }).name
+
   return (
     <motion.div
       className={invalid ? 'msj__question msj__question--invalid' : 'msj__question'}
-      data-msj-question={question.name}
+      data-msj-element={elementName}
+      data-msj-question={question?.name}
       initial={opts.animate ? { opacity: 0, y: 12 } : false}
       whileInView={opts.animate ? { opacity: 1, y: 0 } : undefined}
       viewport={{ amount: 0.25, once: true }}

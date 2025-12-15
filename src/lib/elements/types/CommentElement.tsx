@@ -1,13 +1,13 @@
 import type { Question } from 'survey-core'
 import * as Label from '@radix-ui/react-label'
-import { BaseQuestion } from '../ui/BaseQuestion'
-import { getQuestionTitle } from './getQuestionTitle'
-import { Errors } from '../ui/Errors'
-import type { RenderOptions } from '../ui/types'
-import { getQuestionErrors } from './getQuestionErrors'
-import { setQuestionValue } from './setQuestionValue'
+import { BaseElement } from '../../ui/BaseElement'
+import { Errors } from '../../ui/Errors'
+import type { RenderOptions } from '../../ui/types'
+import { getQuestionTitle } from '../getQuestionTitle'
+import { getQuestionErrors } from '../getQuestionErrors'
+import { setQuestionValue } from '../setQuestionValue'
 
-export function CommentQuestion({
+export function CommentElement({
   question,
   opts,
 }: {
@@ -29,7 +29,7 @@ export function CommentQuestion({
   const wordCount = words.length
 
   return (
-    <BaseQuestion question={q} opts={opts}>
+    <BaseElement element={q} opts={opts}>
       <Label.Root className="msj__label" htmlFor={q.id}>
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -56,6 +56,6 @@ export function CommentQuestion({
         </div>
       </div>
       <Errors errors={errors} opts={opts} />
-    </BaseQuestion>
+    </BaseElement>
   )
 }
