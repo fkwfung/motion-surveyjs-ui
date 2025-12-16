@@ -38,7 +38,6 @@ export function PanelDynamicElement({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
               transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-              layout
             >
               <div className="msj__panelDynamicHeader">
                 <div className="msj__panelDynamicTitle">Item {idx + 1}</div>
