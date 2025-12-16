@@ -39,7 +39,7 @@ export function BaseElement({
       className={invalid ? 'msj__question msj__question--invalid' : 'msj__question'}
       data-msj-element={elementName}
       data-msj-question={question?.name}
-      initial={opts.animate ? { opacity: 0, y: 12 } : false}
+      initial={opts.animate ? { opacity: 0.85, y: 12 } : false}
       whileInView={opts.animate ? { opacity: 1, y: 0 } : undefined}
       viewport={{ amount: 0.25, once: true }}
       transition={{ duration: opts.duration }}

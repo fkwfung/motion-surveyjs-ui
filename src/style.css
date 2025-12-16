@@ -59,7 +59,7 @@
 }
 
 .msj__question {
-  margin: 0 0 16px;
+  margin: 0 0 40px;
 }
 
 .msj__questionInner {
@@ -87,7 +87,7 @@
 .msj__label {
   display: block;
   font-weight: 600;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
 }
 
 .msj__hint {
@@ -300,7 +300,7 @@
 
 .msj__choiceList {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .msj__choiceList .msj__choice {
@@ -527,7 +527,7 @@
 .msj__rating {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .msj__ratingItem {
@@ -573,7 +573,7 @@
 .msj__tagbox {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .msj__tag {
@@ -607,7 +607,7 @@
 .msj__buttonGroup {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .msj__buttonGroupItem {
@@ -683,7 +683,7 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .msj__rankingItem {
