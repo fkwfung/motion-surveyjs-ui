@@ -219,3 +219,16 @@ This guide should be updated whenever:
 - classnames change
 - the styling system changes (new theme model, new override API)
 - motion/transition behavior changes in a way that affects CSS customization
+
+---
+
+## 9) Ranking customization
+
+Ranking items can be customized with the following variables:
+
+```css
+.msj {
+  --msj-ranking-item-border: 1px solid var(--msj-border);
+  --msj-ranking-item-bg: white;
+}
+```
