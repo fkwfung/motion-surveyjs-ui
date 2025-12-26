@@ -97,11 +97,13 @@ Tip: Use these tokens to implement your own “brand theme” without rewriting 
 
 Choice options are rendered using a shared option wrapper class and support both hover and selected animations.
 
-### 4.1 Turn choice borders on/off
+### 4.1 Turn choice borders on (default is none)
+
+By default, choice options are borderless. To add borders:
 
 ```css
 .msj {
-  --msj-choice-option-border: none;
+  --msj-choice-option-border: 1px solid var(--msj-border);
 }
 ```
 
