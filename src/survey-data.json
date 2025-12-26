@@ -236,6 +236,16 @@
           "choices": ["Speed", "Accessibility", "Theme", "Animations"]
         },
         {
+          "type": "ranking",
+          "name": "rankingSelect",
+          "title": "Rank your top 3 fruits (select to rank)",
+          "selectToRankEnabled": true,
+          "selectToRankAreasLayout": "horizontal",
+          "minSelectedChoices": 3,
+          "maxSelectedChoices": 3,
+          "choices": ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"]
+        },
+        {
           "type": "matrixdropdown",
           "name": "matrixDropdown",
           "title": "Matrix Dropdown (placeholder demo)",
