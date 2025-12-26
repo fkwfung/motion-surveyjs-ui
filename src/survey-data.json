@@ -133,6 +133,19 @@
           ]
         },
         {
+          "type": "rating",
+          "name": "experience",
+          "title": "How was your experience? (Labels - Text)",
+          "rateType": "labels",
+          "rateValues": [
+            { "value": "Terrible" },
+            { "value": "Bad" },
+            { "value": "Average" },
+            { "value": "Good" },
+            { "value": "Excellent" }
+          ]
+        },
+        {
           "type": "radiogroup",
           "name": "primaryUseCase",
           "title": "Primary use case",
