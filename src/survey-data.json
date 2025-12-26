@@ -32,14 +32,14 @@
           "type": "text",
           "name": "fullName",
           "title": "Full name",
-          "isRequired": true
+          "isRequired": false
         },
         {
           "type": "text",
           "name": "workEmail",
           "title": "Work email",
           "inputType": "email",
-          "isRequired": true,
+          "isRequired": false,
           "validators": [{ "type": "email" }]
         },
         {
@@ -89,10 +89,48 @@
         },
         {
           "type": "rating",
+          "name": "nps",
+          "title": "How likely are you to recommend us? (0-10)",
+          "rateMin": 0,
+          "rateMax": 10,
+          "minRateDescription": "Not likely",
+          "maxRateDescription": "Very likely"
+        },
+        {
+          "type": "rating",
+          "name": "nps_custom",
+          "title": "How likely are you to recommend us? (1-5)",
+          "rateMin": 1,
+          "rateMax": 5,
+          "minRateDescription": "Highly unlikely",
+          "maxRateDescription": "Very likely"
+        },
+        {
+          "type": "rating",
+          "name": "satisfaction",
+          "title": "How satisfied are you? (Smileys + Color)",
+          "rateType": "smileys",
+          "scaleColorMode": "colored"
+        },
+        {
+          "type": "rating",
           "name": "uxRating",
-          "title": "How important is motion/animation in your UI?",
+          "title": "Rate the UX (Stars)",
           "rateType": "stars",
           "rateValues": [1, 2, 3, 4, 5]
+        },
+        {
+          "type": "rating",
+          "name": "experience",
+          "title": "How was your experience? (Labels)",
+          "rateType": "labels",
+          "rateValues": [
+            { "value": 1, "text": "Terrible" },
+            { "value": 2, "text": "Bad" },
+            { "value": 3, "text": "Average" },
+            { "value": 4, "text": "Good" },
+            { "value": 5, "text": "Excellent" }
+          ]
         },
         {
           "type": "radiogroup",

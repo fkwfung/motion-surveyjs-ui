@@ -530,6 +530,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
 }
 
 .msj__ratingItem {
@@ -539,6 +540,9 @@
   padding: 10px 12px;
   background: white;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .msj__ratingItemBg {
