@@ -539,6 +539,9 @@
   padding: 10px 12px;
   background: white;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .msj__ratingItemBg {
