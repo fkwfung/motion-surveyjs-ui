@@ -1,8 +1,7 @@
 import type { Question } from 'survey-core'
-import * as Checkbox from '@radix-ui/react-checkbox'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
-import { Checkmark } from '../../ui/Checkmark'
 import { Errors } from '../../ui/Errors'
 import type { RenderOptions } from '../../ui/types'
 import { getQuestionTitle } from '../getQuestionTitle'
@@ -16,38 +15,104 @@ export function BooleanElement({
   question: Question
   opts: RenderOptions
 }) {
-  const q = question
+  const q = question as any // Cast to any to access Boolean-specific props
   const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
+  
+  const labelTrue = q.labelTrue || "Yes"
+  const labelFalse = q.labelFalse || "No"
+  const valueTrue = q.valueTrue ?? true
+  const valueFalse = q.valueFalse ?? false
+  const swapOrder = q.swapOrder === true
+
+  // Determine current selection state
+  let currentValue: string | undefined
+  if (q.value === valueTrue) currentValue = 'true'
+  else if (q.value === valueFalse) currentValue = 'false'
+  else if (q.value === true) currentValue = 'true'
+  else if (q.value === false) currentValue = 'false'
+
+  const handleValueChange = (val: string) => {
+      const newValue = val === 'true' ? valueTrue : valueFalse
+      setQuestionValue(q, newValue)
+  }
+
+  // Calculate handle position and width
+  // Default: False (Left), True (Right)
+  // Swap: True (Left), False (Right)
+  
+  let position = '50%'
+  let x = '-50%'
+  let width = '40px' // Small circle/pill when unchosen
+  
+  if (currentValue === 'true') {
+      width = 'calc(50% - 6px)'
+      if (swapOrder) {
+          // True is Left
+          position = '0%'
+          x = '4px'
+      } else {
+          // True is Right
+          position = '100%'
+          x = 'calc(-100% - 4px)'
+      }
+  } else if (currentValue === 'false') {
+      width = 'calc(50% - 6px)'
+      if (swapOrder) {
+          // False is Right
+          position = '100%'
+          x = 'calc(-100% - 4px)'
+      } else {
+          // False is Left
+          position = '0%'
+          x = '4px'
+      }
+  }
+
+  const leftLabel = swapOrder ? labelTrue : labelFalse
+  const rightLabel = swapOrder ? labelFalse : labelTrue
+  const leftValue = swapOrder ? 'true' : 'false'
+  const rightValue = swapOrder ? 'false' : 'true'
 
   return (
     <BaseElement element={q} opts={opts}>
-      <label className="msj__choice">
-        <Checkbox.Root
-          className="msj__checkbox"
-          checked={Boolean(q.value)}
-          onCheckedChange={(v) => setQuestionValue(q, v === true)}
-        >
-          <Checkbox.Indicator forceMount asChild>
-            <motion.span
-              className="msj__checkboxIndicator"
-              initial={false}
-              animate={
-                q.value
-                  ? { opacity: 1, scale: [0.9, 1.1, 1] }
-                  : { opacity: 0, scale: 0.9 }
-              }
-              transition={{ duration: Math.max(0.18, opts.duration * 0.7) }}
+      <div className="msj__label">
+        {title}
+        {q.isRequired ? <span aria-hidden> *</span> : null}
+      </div>
+      
+      <RadioGroup.Root
+        className="msj__toggleSwitch"
+        value={currentValue}
+        onValueChange={handleValueChange}
+      >
+         <div className="msj__toggleTrack" aria-hidden="true">
+            <div className="msj__toggleTrackLabel msj__toggleTrackLabel--left">{leftLabel}</div>
+            <div className="msj__toggleTrackLabel msj__toggleTrackLabel--right">{rightLabel}</div>
+            
+            <motion.div 
+                className={`msj__toggleHandle ${currentValue === 'true' ? 'msj__toggleHandle--true' : currentValue === 'false' ? 'msj__toggleHandle--false' : ''}`}
+                initial={false}
+                animate={{ left: position, x, width }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             >
-              <Checkmark active={Boolean(q.value)} duration={Math.max(0.22, opts.duration * 1.2)} />
-            </motion.span>
-          </Checkbox.Indicator>
-        </Checkbox.Root>
-        <span className="msj__labelInline">
-          {title}
-          {q.isRequired ? <span aria-hidden> *</span> : null}
-        </span>
-      </label>
+                <motion.span
+                  key={currentValue || 'empty'}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                >
+                  {currentValue === 'true' ? labelTrue : currentValue === 'false' ? labelFalse : ''}
+                </motion.span>
+            </motion.div>
+         </div>
+
+         <div className="msj__toggleInputs">
+            <RadioGroup.Item value={leftValue} className="msj__toggleInput" aria-label={leftLabel} />
+            <RadioGroup.Item value={rightValue} className="msj__toggleInput" aria-label={rightLabel} />
+         </div>
+      </RadioGroup.Root>
+
       <Errors errors={errors} opts={opts} />
     </BaseElement>
   )
