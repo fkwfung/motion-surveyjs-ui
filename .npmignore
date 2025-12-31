@@ -1,0 +1,12 @@
+src/
+node_modules/
+.git/
+.github/
+specs/
+tests/
+*.log
+.DS_Store
+tsconfig*.json
+vite.config.ts
+vitest.config.ts
+eslint.config.js

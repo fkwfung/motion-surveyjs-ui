@@ -2,14 +2,15 @@ import type { ChoiceItem, Question } from 'survey-core'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { motion } from 'motion/react'
-import { BaseQuestion } from '../ui/BaseQuestion'
-import { Checkmark } from '../ui/Checkmark'
-import { Errors } from '../ui/Errors'
-import type { RenderOptions } from '../ui/types'
-import { getQuestionErrors } from './getQuestionErrors'
-import { setQuestionValue } from './setQuestionValue'
+import { BaseElement } from '../../ui/BaseElement'
+import { Checkmark } from '../../ui/Checkmark'
+import { Errors } from '../../ui/Errors'
+import type { RenderOptions } from '../../ui/types'
+import { getQuestionTitle } from '../getQuestionTitle'
+import { getQuestionErrors } from '../getQuestionErrors'
+import { setQuestionValue } from '../setQuestionValue'
 
-export function ChoiceQuestion({
+export function ChoiceElement({
   question,
   isMulti,
   opts,
@@ -19,8 +20,8 @@ export function ChoiceQuestion({
   opts: RenderOptions
 }) {
   const q = question
-  const title = q.title || q.name
-  const errors = getQuestionErrors(q)
+  const title = getQuestionTitle(q, opts)
+  const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   const choices =
     (q as unknown as { visibleChoices?: ChoiceItem[] }).visibleChoices ?? []
 
@@ -28,7 +29,7 @@ export function ChoiceQuestion({
     const currentStr = q.value == null ? '' : String(q.value)
 
     return (
-      <BaseQuestion opts={opts}>
+      <BaseElement element={q} opts={opts}>
         <div className="msj__label">
           {title}
           {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -95,14 +96,14 @@ export function ChoiceQuestion({
           })}
         </RadioGroup.Root>
         <Errors errors={errors} opts={opts} />
-      </BaseQuestion>
+      </BaseElement>
     )
   }
 
   const set = new Set(Array.isArray(q.value) ? q.value : [])
 
   return (
-    <BaseQuestion opts={opts}>
+    <BaseElement element={q} opts={opts}>
       <div className="msj__label">
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
@@ -156,6 +157,6 @@ export function ChoiceQuestion({
         })}
       </div>
       <Errors errors={errors} opts={opts} />
-    </BaseQuestion>
+    </BaseElement>
   )
 }

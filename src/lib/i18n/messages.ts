@@ -9,6 +9,7 @@ export type MessageKey =
   | 'thanksHint'
   | 'selectPlaceholder'
   | 'wordCount'
+  | 'pageXofY'
 
 export type Messages = Record<MessageKey, string>
 

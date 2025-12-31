@@ -1,9 +1,10 @@
 {
-  "back": "Back",
+  "back": "Previous",
   "next": "Next",
   "complete": "Complete",
   "thanksTitle": "Thanks!",
   "thanksHint": "Your responses have been recorded.",
   "selectPlaceholder": "Select…",
-  "wordCount": "{count}/{max} words"
+  "wordCount": "{count}/{max} words",
+  "pageXofY": "Page {current} of {total}"
 }

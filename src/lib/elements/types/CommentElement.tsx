@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import type { Question } from 'survey-core'
 import * as Label from '@radix-ui/react-label'
-import { BaseQuestion } from '../ui/BaseQuestion'
-import { Errors } from '../ui/Errors'
-import type { RenderOptions } from '../ui/types'
-import { getQuestionErrors } from './getQuestionErrors'
-import { setQuestionValue } from './setQuestionValue'
+import { motion } from 'motion/react'
+import { BaseElement } from '../../ui/BaseElement'
+import { Errors } from '../../ui/Errors'
+import type { RenderOptions } from '../../ui/types'
+import { getQuestionTitle } from '../getQuestionTitle'
+import { getQuestionErrors } from '../getQuestionErrors'
+import { setQuestionValue } from '../setQuestionValue'
 
-export function CommentQuestion({
+export function CommentElement({
   question,
   opts,
 }: {
@@ -14,8 +17,9 @@ export function CommentQuestion({
   opts: RenderOptions
 }) {
   const q = question
-  const title = q.title || q.name
-  const errors = getQuestionErrors(q)
+  const title = getQuestionTitle(q, opts)
+  const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
+  const [focused, setFocused] = useState(false)
 
   const raw = String(q.value ?? '')
 
@@ -26,18 +30,26 @@ export function CommentQuestion({
 
   const words = raw.trim() ? raw.trim().split(/\s+/).filter(Boolean) : []
   const wordCount = words.length
+  const nearLimit = wordCount >= maxWords * 0.9
 
   return (
-    <BaseQuestion opts={opts}>
+    <BaseElement element={q} opts={opts}>
       <Label.Root className="msj__label" htmlFor={q.id}>
         {title}
         {q.isRequired ? <span aria-hidden> *</span> : null}
       </Label.Root>
-      <div className="msj__textareaWrap">
+      <motion.div
+        className="msj__textareaWrap"
+        initial={false}
+        animate={focused ? { scale: 1.005 } : { scale: 1 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      >
         <textarea
           id={q.id}
           className="msj__textarea"
           value={raw}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           onChange={(e) => {
             const nextRaw = e.currentTarget.value
             const nextWords = nextRaw.trim()
@@ -50,11 +62,16 @@ export function CommentQuestion({
             setQuestionValue(q, `${nextWords.slice(0, maxWords).join(' ')} `)
           }}
         />
-        <div className="msj__counter">
+        <motion.div
+          className="msj__counter"
+          initial={false}
+          animate={nearLimit ? { scale: 1.05, color: '#dc2626' } : { scale: 1, color: '#64748b' }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        >
           {opts.t('wordCount', { count: wordCount, max: maxWords })}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       <Errors errors={errors} opts={opts} />
-    </BaseQuestion>
+    </BaseElement>
   )
 }

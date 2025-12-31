@@ -97,11 +97,13 @@ Tip: Use these tokens to implement your own “brand theme” without rewriting 
 
 Choice options are rendered using a shared option wrapper class and support both hover and selected animations.
 
-### 4.1 Turn choice borders on/off
+### 4.1 Turn choice borders on (default is none)
+
+By default, choice options are borderless. To add borders:
 
 ```css
 .msj {
-  --msj-choice-option-border: none;
+  --msj-choice-option-border: 1px solid var(--msj-border);
 }
 ```
 
@@ -125,6 +127,24 @@ To customize, override the option pseudo-element:
 
 .msj .msj__choiceOption:hover::before {
   opacity: 0.6;
+}
+```
+
+### 4.3 Matrix option cell borders (radio/checkbox in matrix)
+
+Matrix cells use their own border token (defaults to `none`):
+
+```css
+.msj {
+  --msj-matrix-cell-border: none;
+}
+```
+
+If you prefer borders:
+
+```css
+.msj {
+  --msj-matrix-cell-border: 1px solid var(--msj-border);
 }
 ```
 
@@ -182,6 +202,7 @@ These are commonly useful selectors:
 - `.msj__choiceList`
 - `.msj__choiceOption` (radio/checkbox option wrapper)
 - `.msj__selectTrigger`, `.msj__selectContent`, `.msj__selectItem`
+  - Note: the dropdown popup is rendered in a Radix `Portal`, so it uses `--msj-font-family` explicitly (it does not rely on inheriting from `.msj`).
 - `.msj__error`
 
 When overriding styles, prefer:
@@ -198,3 +219,16 @@ This guide should be updated whenever:
 - classnames change
 - the styling system changes (new theme model, new override API)
 - motion/transition behavior changes in a way that affects CSS customization
+
+---
+
+## 9) Ranking customization
+
+Ranking items can be customized with the following variables:
+
+```css
+.msj {
+  --msj-ranking-item-border: 1px solid var(--msj-border);
+  --msj-ranking-item-bg: white;
+}
+```
