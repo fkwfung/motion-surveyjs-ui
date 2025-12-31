@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useRef, type ReactNode } from 'react'
+import { useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react'
 import { Model, Question, type IElement } from 'survey-core'
 import { AnimatePresence, motion } from 'motion/react'
 import { renderElement } from './elements/renderElement'
@@ -118,7 +118,7 @@ export function MotionSurvey({
 
   const duration = animationDurationMs / 1000
   const t = useMemo(() => createTranslator({ locale, messages }), [locale, messages])
-  const portalContainerRef = useRef<HTMLDivElement | null>(null)
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
 
   const rootClassName = [
     'msj',
@@ -358,7 +358,7 @@ export function MotionSurvey({
   }
 
   return (
-    <div className={rootClassName} ref={portalContainerRef}>
+    <div className={rootClassName} ref={setPortalContainer}>
       <div className="msj__card">
         {survey.title ? <h2 className="msj__title">{survey.title}</h2> : null}
 
@@ -426,7 +426,7 @@ export function MotionSurvey({
                             questionIndex: localIndex,
                             globalQuestionIndex: globalIndex,
                             showQuestionNumbers,
-                            portalContainer: portalContainerRef.current,
+                            portalContainer,
                           } satisfies RenderOptions
                         )}
                       </div>,

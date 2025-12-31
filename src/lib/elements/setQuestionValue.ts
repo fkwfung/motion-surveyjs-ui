@@ -5,8 +5,8 @@ export function setQuestionValue(element: IElement, value: unknown) {
     const q = element
     const survey = q.survey
 
-    if (survey && typeof survey.setValue === 'function' && q.name) {
-      survey.setValue(q.name, value)
+    if (survey && typeof (survey as unknown as { setValue: unknown }).setValue === 'function' && q.name) {
+      (survey as unknown as { setValue: (n: string, v: unknown) => void }).setValue(q.name, value)
       return
     }
   }

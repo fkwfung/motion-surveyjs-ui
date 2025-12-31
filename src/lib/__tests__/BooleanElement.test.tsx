@@ -116,13 +116,13 @@ describe('BooleanElement', () => {
   it('supports custom labels and values', async () => {
     const q2 = new Question('bool_q2')
     q2.title = 'Agree?'
-    // @ts-ignore
+    // @ts-expect-error - Testing invalid prop
     q2.labelTrue = 'Agree'
-    // @ts-ignore
+    // @ts-expect-error - Testing invalid prop
     q2.labelFalse = 'Disagree'
-    // @ts-ignore
+    // @ts-expect-error - Testing invalid prop
     q2.valueTrue = 'Yes'
-    // @ts-ignore
+    // @ts-expect-error - Testing invalid prop
     q2.valueFalse = 'No'
     
     const { user } = setup(<BooleanElement question={q2} opts={opts} />)
@@ -142,7 +142,7 @@ describe('BooleanElement', () => {
 
   it('respects swapOrder property', () => {
      const q3 = new Question('bool_q3')
-     // @ts-ignore
+     // @ts-expect-error - Testing invalid prop
      q3.swapOrder = true
      
      render(<BooleanElement question={q3} opts={opts} />)

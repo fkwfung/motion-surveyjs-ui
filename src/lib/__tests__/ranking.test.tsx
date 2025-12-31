@@ -9,8 +9,8 @@ vi.mock('motion/react', async () => {
   return {
     ...actual,
     Reorder: {
-      Group: ({ children, className }: any) => <ul className={className}>{children}</ul>,
-      Item: ({ children, className, style }: any) => <li className={className} style={style}>{children}</li>,
+      Group: ({ children, className }: { children: React.ReactNode; className: string }) => <ul className={className}>{children}</ul>,
+      Item: ({ children, className, style }: { children: React.ReactNode; className: string; style: React.CSSProperties }) => <li className={className} style={style}>{children}</li>,
     },
     useDragControls: () => ({}),
   };
@@ -22,7 +22,8 @@ describe('RankingElement', () => {
     question.choices = ['Item 1', 'Item 2', 'Item 3'];
     question.value = ['Item 2', 'Item 1', 'Item 3']; // Different order
 
-    render(<RankingElement question={question} opts={{}} as any />);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    render(<RankingElement question={question} opts={{} as any} />);
 
     const items = screen.getAllByText(/Item \d/);
     expect(items[0]).toHaveTextContent('Item 2');
@@ -33,14 +34,15 @@ describe('RankingElement', () => {
   it('renders select to rank mode', () => {
     const question = new Question('q2');
     question.choices = ['Item A', 'Item B'];
-    (question as any).visibleChoices = [
+    (question as unknown as { visibleChoices: unknown[] }).visibleChoices = [
       { value: 'Item A', text: 'Item A' },
       { value: 'Item B', text: 'Item B' }
     ];
-    (question as any).selectToRankEnabled = true;
+    (question as unknown as { selectToRankEnabled: boolean }).selectToRankEnabled = true;
     question.value = []; // Start empty
 
-    render(<RankingElement question={question} opts={{}} as any />);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    render(<RankingElement question={question} opts={{} as any} />);
 
     // Should see "Choices" and "Ranked" areas
     expect(screen.getByText('Choices')).toBeInTheDocument();
@@ -54,11 +56,12 @@ describe('RankingElement', () => {
   it('renders with longTap enabled', () => {
     const question = new Question('q3');
     question.choices = ['Item X'];
-    (question as any).visibleChoices = [{ value: 'Item X', text: 'Item X' }];
-    (question as any).longTap = true;
+    (question as unknown as { visibleChoices: unknown[] }).visibleChoices = [{ value: 'Item X', text: 'Item X' }];
+    (question as unknown as { longTap: boolean }).longTap = true;
     question.value = ['Item X'];
 
-    render(<RankingElement question={question} opts={{}} as any />);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    render(<RankingElement question={question} opts={{} as any} />);
 
     const item = screen.getByText('Item X').closest('li');
     // The cursor style is now on the drag handle, not the item itself

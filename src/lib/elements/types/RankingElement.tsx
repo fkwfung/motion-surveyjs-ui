@@ -9,7 +9,14 @@ import { setQuestionValue } from '../setQuestionValue'
 import { RankingItem } from './RankingItem'
 
 export function RankingElement({ question, opts }: { question: Question; opts: RenderOptions }) {
-  const q = question as unknown as { visibleChoices?: ChoiceItem[] } & Record<string, any>
+  const q = question as unknown as {
+    visibleChoices?: ChoiceItem[]
+    selectToRankEnabled?: boolean
+    selectToRankAreasLayout?: 'horizontal' | 'vertical'
+    selectToRankEmptyRankedAreaText?: string
+    selectToRankEmptyUnrankedAreaText?: string
+    longTap?: boolean
+  } & Question
   const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
   const choices = q.visibleChoices ?? []
@@ -34,16 +41,16 @@ export function RankingElement({ question, opts }: { question: Question; opts: R
     ? choices.filter(c => !current.includes(c.value)).map(c => c.value)
     : []
 
-  const onReorder = (newOrder: any[]) => {
+  const onReorder = (newOrder: unknown[]) => {
     setQuestionValue(question, newOrder)
   }
 
-  const addToRanked = (val: any) => {
+  const addToRanked = (val: unknown) => {
     const next = [...current, val]
     setQuestionValue(question, next)
   }
 
-  const removeFromRanked = (val: any) => {
+  const removeFromRanked = (val: unknown) => {
     const next = current.filter(v => v !== val)
     setQuestionValue(question, next)
   }

@@ -15,7 +15,13 @@ export function BooleanElement({
   question: Question
   opts: RenderOptions
 }) {
-  const q = question as any // Cast to any to access Boolean-specific props
+  const q = question as unknown as {
+    labelTrue?: string
+    labelFalse?: string
+    valueTrue?: unknown
+    valueFalse?: unknown
+    swapOrder?: boolean
+  } & Question
   const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   

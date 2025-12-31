@@ -28,7 +28,7 @@ export const RankingItem: React.FC<RankingItemProps> = ({
   enableDrag = true
 }) => {
   const controls = useDragControls();
-  const timeoutRef = useRef<any>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (longTap && !onClick) {
