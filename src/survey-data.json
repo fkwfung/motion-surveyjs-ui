@@ -134,7 +134,7 @@
         },
         {
           "type": "rating",
-          "name": "experience",
+          "name": "experience2",
           "title": "How was your experience? (Labels - Text)",
           "rateType": "labels",
           "rateValues": [
