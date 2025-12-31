@@ -12,6 +12,7 @@ export interface RankingItemProps {
   onMoveDown?: () => void;
   isRanked?: boolean;
   longTap?: boolean;
+  enableDrag?: boolean;
 }
 
 export const RankingItem: React.FC<RankingItemProps> = ({ 
@@ -23,7 +24,8 @@ export const RankingItem: React.FC<RankingItemProps> = ({
   onMoveUp,
   onMoveDown,
   isRanked, 
-  longTap 
+  longTap,
+  enableDrag = true
 }) => {
   const controls = useDragControls();
   const timeoutRef = useRef<any>(null);
@@ -60,26 +62,8 @@ export const RankingItem: React.FC<RankingItemProps> = ({
     }
   };
 
-  // If onClick is present (Select to Rank mode), we don't drag.
-  // If longTap is true, we drag via custom controls on long press.
-  // If longTap is false, we drag via custom controls on immediate press (on the grip icon).
-  
-  return (
-    <Reorder.Item
-      value={value}
-      className="msj__rankingItem"
-      dragListener={false} // We always use dragControls for better control
-      dragControls={controls}
-      onClick={onClick}
-      onKeyDown={handleKeyDown}
-      tabIndex={onClick ? 0 : undefined}
-      role={onClick ? 'button' : undefined}
-      aria-label={onClick ? `${isRanked ? 'Remove' : 'Add'} ${text}` : undefined}
-      style={{ 
-        cursor: onClick ? 'pointer' : 'default',
-        touchAction: 'none' // Important for drag to work reliably on mobile
-      }}
-    >
+  const content = (
+    <>
       <span className="msj__rankingLabel" style={{ flex: 1 }}>{text}</span>
       
       <span className="msj__rankingControls" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -130,6 +114,45 @@ export const RankingItem: React.FC<RankingItemProps> = ({
           </>
         )}
       </span>
+    </>
+  );
+
+  if (!enableDrag) {
+    return (
+      <li
+        className="msj__rankingItem"
+        onClick={onClick}
+        onKeyDown={handleKeyDown}
+        tabIndex={onClick ? 0 : undefined}
+        role={onClick ? 'button' : undefined}
+        aria-label={onClick ? `${isRanked ? 'Remove' : 'Add'} ${text}` : undefined}
+        style={{ 
+          cursor: onClick ? 'pointer' : 'default',
+          touchAction: 'none'
+        }}
+      >
+        {content}
+      </li>
+    );
+  }
+
+  return (
+    <Reorder.Item
+      value={value}
+      className="msj__rankingItem"
+      dragListener={false} // We always use dragControls for better control
+      dragControls={controls}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={onClick ? 0 : undefined}
+      role={onClick ? 'button' : undefined}
+      aria-label={onClick ? `${isRanked ? 'Remove' : 'Add'} ${text}` : undefined}
+      style={{ 
+        cursor: onClick ? 'pointer' : 'default',
+        touchAction: 'none' // Important for drag to work reliably on mobile
+      }}
+    >
+      {content}
     </Reorder.Item>
   );
 };

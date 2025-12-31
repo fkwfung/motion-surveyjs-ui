@@ -73,6 +73,7 @@ export function RankingElement({ question, opts }: { question: Question; opts: R
                          onClick={() => addToRanked(v)}
                          isRanked={false}
                          longTap={longTap}
+                         enableDrag={false}
                        />
                     </motion.div>
                   )
