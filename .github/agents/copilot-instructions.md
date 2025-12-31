@@ -6,6 +6,9 @@ Auto-generated from all feature plans. Last updated: 2025-12-26
 - TypeScript 5.9, React 18+ + `lucide-react` (new), `survey-core`, `motion`, `@radix-ui/*` (002-feature-implement-details)
 - TypeScript 5.x + React 18, survey-core, motion/react, @radix-ui/react-* (003-feature-support-drag)
 - N/A (SurveyJS Model State) (003-feature-support-drag)
+- TypeScript 5.x + React, SurveyJS (survey-core), Radix UI, motion/reac (004-enhancement-boolean-type-element)
+- TypeScript ~5.9.3 + React >=18, survey-core ^2.5.0, motion ^12.0.0, @radix-ui/react-switch (004-enhancement-boolean-type-element)
+- TypeScript 5.x + React 18+, SurveyJS (survey-core), Radix UI, motion/reac (004-enhancement-boolean-type-element)
 
 - TypeScript 5.x + React, survey-core, motion/react, Radix UI (001-fix-make-choices)
 
@@ -25,9 +28,9 @@ npm test && npm run lint
 TypeScript 5.x: Follow standard conventions
 
 ## Recent Changes
-- 003-feature-support-drag: Added TypeScript 5.x + React 18, survey-core, motion/react, @radix-ui/react-*
-- 003-feature-support-drag: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
-- 002-feature-implement-details: Added TypeScript 5.9, React 18+ + `lucide-react` (new), `survey-core`, `motion`, `@radix-ui/*`
+- 004-enhancement-boolean-type-element: Added TypeScript 5.x + React 18+, SurveyJS (survey-core), Radix UI, motion/reac
+- 004-enhancement-boolean-type-element: Added TypeScript ~5.9.3 + React >=18, survey-core ^2.5.0, motion ^12.0.0, @radix-ui/react-switch
+- 004-enhancement-boolean-type-element: Added TypeScript 5.x + React, SurveyJS (survey-core), Radix UI, motion/reac
 
 
 <!-- MANUAL ADDITIONS START -->

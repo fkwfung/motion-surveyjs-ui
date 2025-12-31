@@ -9,6 +9,15 @@
   --msj-primary: #2563eb;
   --msj-primary-contrast: #ffffff;
   --msj-radius: 10px;
+
+  /* Boolean Element Colors */
+  --msj-boolean-true-bg: color-mix(in srgb, var(--msj-primary) 14%, white);
+  --msj-boolean-true-text: var(--msj-primary);
+  --msj-boolean-true-border: color-mix(in srgb, var(--msj-primary) 35%, var(--msj-border));
+  
+  --msj-boolean-false-bg: #f1f5f9;
+  --msj-boolean-false-text: #475569;
+  --msj-boolean-false-border: #cbd5e1;
 }
 
 .msj--theme-modern {
@@ -636,6 +645,121 @@
   position: relative;
   z-index: 1;
   font-weight: 600;
+}
+
+/* Boolean Element Specifics */
+.msj__buttonGroupItem--true.msj__buttonGroupItem--active {
+  border-color: var(--msj-boolean-true-border);
+  color: var(--msj-boolean-true-text);
+}
+
+.msj__buttonGroupItem--true .msj__buttonGroupItemBg {
+  background: var(--msj-boolean-true-bg);
+}
+
+.msj__buttonGroupItem--false.msj__buttonGroupItem--active {
+  border-color: var(--msj-boolean-false-border);
+  color: var(--msj-boolean-false-text);
+}
+
+.msj__buttonGroupItem--false .msj__buttonGroupItemBg {
+  background: var(--msj-boolean-false-bg);
+}
+
+/* Toggle Switch */
+.msj__toggleSwitch {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 48px;
+  border-radius: 999px;
+  background: var(--msj-bg);
+  border: 1px solid var(--msj-border);
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.msj__toggleTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.msj__toggleTrackLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--msj-muted);
+  z-index: 0;
+  width: 50%;
+  text-align: center;
+}
+
+.msj__toggleTrackLabel--left {
+  text-align: center; /* Or left? Center of the half seems better */
+  transform: translateX(-10px); /* Adjust for padding? */
+}
+
+.msj__toggleTrackLabel--right {
+  text-align: center;
+  transform: translateX(10px);
+}
+
+.msj__toggleHandle {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: calc(50% - 6px);
+  background: white;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1;
+  color: var(--msj-text);
+  border: 1px solid var(--msj-border);
+  box-sizing: border-box;
+}
+
+.msj__toggleHandle--true {
+  background: var(--msj-boolean-true-bg);
+  color: var(--msj-boolean-true-text);
+  border-color: var(--msj-boolean-true-border);
+}
+
+.msj__toggleHandle--false {
+  background: var(--msj-boolean-false-bg);
+  color: var(--msj-boolean-false-text);
+  border-color: var(--msj-boolean-false-border);
+}
+
+.msj__toggleInputs {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.msj__toggleInput {
+  flex: 1;
+  opacity: 0.001;
+  cursor: pointer;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: transparent;
+  border-radius: 999px; /* For focus ring shape if we used outline on input */
+}
+
+.msj__toggleSwitch:has(.msj__toggleInput:focus-visible) {
+  outline: 2px solid var(--msj-primary);
+  outline-offset: 2px;
 }
 
 .msj__imagePicker {
