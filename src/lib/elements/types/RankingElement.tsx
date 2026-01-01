@@ -3,8 +3,8 @@ import { Reorder, motion, AnimatePresence } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
-import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 import { RankingItem } from './RankingItem'
 
@@ -17,7 +17,6 @@ export function RankingElement({ question, opts }: { question: Question; opts: R
     selectToRankEmptyUnrankedAreaText?: string
     longTap?: boolean
   } & Question
-  const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
   const choices = q.visibleChoices ?? []
 

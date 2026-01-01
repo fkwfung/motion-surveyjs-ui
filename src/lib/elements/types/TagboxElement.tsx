@@ -3,13 +3,12 @@ import { motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
-import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 
 export function TagboxElement({ question, opts }: { question: Question; opts: RenderOptions }) {
   const q = question as unknown as { visibleChoices?: ChoiceItem[] }
-  const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
   const choices = q.visibleChoices ?? []
   const set = new Set(Array.isArray(question.value) ? (question.value as unknown[]) : [])

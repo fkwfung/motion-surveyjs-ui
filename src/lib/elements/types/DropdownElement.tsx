@@ -7,6 +7,7 @@ import { Errors } from '../../ui/Errors'
 import type { RenderOptions } from '../../ui/types'
 import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
+import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 
 export function DropdownElement({
@@ -17,6 +18,7 @@ export function DropdownElement({
   opts: RenderOptions
 }) {
   const q = question
+  const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   const choices =
     (q as unknown as { visibleChoices?: ChoiceItem[] }).visibleChoices ?? []
