@@ -1,0 +1,63 @@
+{
+  "title": {
+    "default": "Multi-locale Survey",
+    "de": "Mehrsprachige Umfrage",
+    "fr": "Mehrsprachige Umfrage (FR)"
+  },
+  "description": {
+    "default": "This survey supports English, German, and French.",
+    "de": "Diese Umfrage unterstützt Englisch, Deutsch und Französisch.",
+    "fr": "Cette enquête prend en charge l'anglais, l'allemand et le français."
+  },
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "text",
+          "name": "name",
+          "title": {
+            "default": "Name",
+            "de": "Name",
+            "fr": "Nom"
+          }
+        },
+        {
+          "type": "dropdown",
+          "name": "country",
+          "title": {
+            "default": "Country",
+            "de": "Land",
+            "fr": "Pays"
+          },
+          "choices": [
+            {
+              "value": "usa",
+              "text": {
+                "default": "USA",
+                "de": "USA",
+                "fr": "États-Unis"
+              }
+            },
+            {
+              "value": "germany",
+              "text": {
+                "default": "Germany",
+                "de": "Deutschland",
+                "fr": "Allemagne"
+              }
+            },
+            {
+              "value": "france",
+              "text": {
+                "default": "France",
+                "de": "Frankreich",
+                "fr": "France"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

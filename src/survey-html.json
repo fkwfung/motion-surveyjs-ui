@@ -1,0 +1,22 @@
+{
+  "title": "HTML Rendering Demo",
+  "completedHtml": "<div style='text-align: center; padding: 40px;'><h1>Thank You!</h1><p>Your response has been recorded.</p><img src='https://placehold.co/100x100/green/white?text=OK' style='border-radius: 50%; margin-top: 20px;' /></div>",
+  "loadingHtml": "<div style='text-align: center; padding: 40px;'><h2>Loading Survey...</h2><p>Please wait a moment.</p></div>",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "html",
+          "name": "info",
+          "html": "<h3>Rich Text Content</h3><p>This is an <b>HTML</b> element. You can use it to display <span style='color: red;'>formatted</span> text, images, and links.</p><ul><li>Item 1</li><li>Item 2</li></ul>"
+        },
+        {
+          "type": "text",
+          "name": "feedback",
+          "title": "Enter some text"
+        }
+      ]
+    }
+  ]
+}

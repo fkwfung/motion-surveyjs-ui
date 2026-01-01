@@ -41,8 +41,7 @@ export function RatingElement({ question, opts }: { question: Question; opts: Re
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
       <div className="msj__rating" data-type={rateType} data-color-mode={scaleColorMode}>
         {minDescription && !displayAsExtreme ? (
