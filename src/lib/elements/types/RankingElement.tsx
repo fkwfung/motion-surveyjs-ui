@@ -58,8 +58,7 @@ export function RankingElement({ question, opts }: { question: Question; opts: R
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
 
       {isSelectToRank ? (

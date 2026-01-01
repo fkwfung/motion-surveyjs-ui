@@ -18,8 +18,7 @@ export function ButtonGroupElement({ question, opts }: { question: Question; opt
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
 
       <div className="msj__buttonGroup">

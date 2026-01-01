@@ -52,6 +52,17 @@
   font-family: var(--msj-font-family);
   color: var(--msj-text);
   --msj-choice-option-border: none;
+  position: relative;
+  isolation: isolate;
+}
+
+.msj__background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
 
 .msj__card {
@@ -60,6 +71,32 @@
   border-radius: var(--msj-radius);
   padding: 20px;
   overflow: visible;
+}
+
+.msj__logo {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 16px;
+}
+
+.msj__logo--left {
+  margin-right: auto;
+}
+
+.msj__logo--right {
+  margin-left: auto;
+}
+
+.msj__logo--top {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+.msj__logo--bottom {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
 
 .msj__title {
@@ -94,9 +131,28 @@
   position: relative;
 }
 
+.msj__titleContainer {
+  display: flex;
+  gap: 6px;
+}
+
+.msj__titleNumber {
+  flex: 0 0 auto;
+  font-weight: 600;
+}
+
+.msj__titleText {
+  flex: 1;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.msj__required {
+  color: #ef4444;
+}
+
 .msj__label {
   display: block;
-  font-weight: 600;
   margin: 0 0 8px;
 }
 
@@ -104,6 +160,7 @@
   color: var(--msj-muted);
   font-size: 12px;
   margin-top: 4px;
+  white-space: pre-line;
 }
 
 .msj__pageHeader {
@@ -386,6 +443,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  white-space: pre-line;
 }
 
 .msj__labelInline {
