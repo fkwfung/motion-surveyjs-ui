@@ -4,8 +4,8 @@ import { Star, Frown, Meh, Smile, Laugh, Angry } from 'lucide-react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
-import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 
 function StarIcon({ active }: { active: boolean }) {
@@ -24,7 +24,6 @@ function SmileyIcon({ idx, total }: { idx: number; total: number }) {
 
 export function RatingElement({ question, opts }: { question: Question; opts: RenderOptions }) {
   const q = question as QuestionRatingModel
-  const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
   const values = q.visibleRateValues ?? []
   const current = question.value == null ? '' : String(question.value)
@@ -41,8 +40,7 @@ export function RatingElement({ question, opts }: { question: Question; opts: Re
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
       <div className="msj__rating" data-type={rateType} data-color-mode={scaleColorMode}>
         {minDescription && !displayAsExtreme ? (

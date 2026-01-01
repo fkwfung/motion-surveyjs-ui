@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import { Errors } from '../../ui/Errors'
 import type { RenderOptions } from '../../ui/types'
-import { getQuestionTitle } from '../getQuestionTitle'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
 import { setQuestionValue } from '../setQuestionValue'
 
@@ -22,7 +22,6 @@ export function BooleanElement({
     valueFalse?: unknown
     swapOrder?: boolean
   } & Question
-  const title = getQuestionTitle(q, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(q) : []
   
   const labelTrue = q.labelTrue || "Yes"
@@ -83,8 +82,7 @@ export function BooleanElement({
   return (
     <BaseElement element={q} opts={opts}>
       <div className="msj__label">
-        {title}
-        {q.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={q} opts={opts} />
       </div>
       
       <RadioGroup.Root

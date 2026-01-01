@@ -1,0 +1,305 @@
+{
+  "title": "Motion SurveyJS UI (demo)",
+  "showPageTitles": true,
+  "showPageNumbers": true,
+  "showNavigationButtons": true,
+  "navigationButtonsLocation": "bottom",
+  "showPrevButton": true,
+  "pages": [
+    {
+      "name": "intro",
+      "title": "Welcome",
+      "elements": [
+        {
+          "type": "html",
+          "name": "introHtml",
+          "title": "Demo",
+          "html": "<p>This demo survey showcases the supported <b>Motion SurveyJS UI</b> element types.</p>"
+        },
+        {
+          "type": "image",
+          "name": "introBanner",
+          "title": "Branding banner",
+          "imageLink": "https://placehold.co/960x160/png?text=Motion+SurveyJS+UI"
+        }
+      ]
+    },
+    {
+      "name": "profile",
+      "title": "Customer profile",
+      "elements": [
+        {
+          "type": "text",
+          "name": "fullName",
+          "title": "Full name",
+          "isRequired": false
+        },
+        {
+          "type": "text",
+          "name": "workEmail",
+          "title": "Work email",
+          "inputType": "email",
+          "isRequired": false,
+          "validators": [{ "type": "email" }]
+        },
+        {
+          "type": "expression",
+          "name": "emailEcho",
+          "title": "Email entered (expression)",
+          "expression": "{workEmail}"
+        },
+        {
+          "type": "multipletext",
+          "name": "companyAddress",
+          "title": "Company address",
+          "items": [
+            { "name": "street", "title": "Street" },
+            { "name": "city", "title": "City" },
+            { "name": "postal", "title": "Postal code" }
+          ]
+        },
+        {
+          "type": "boolean",
+          "name": "optInUpdates",
+          "title": "I want to receive product updates"
+        }
+      ]
+    },
+    {
+      "name": "preferences",
+      "title": "Product preferences",
+      "elements": [
+        {
+          "type": "dropdown",
+          "name": "industry",
+          "title": "Industry",
+          "isRequired": true,
+          "choices": ["SaaS", "E-commerce", "Finance", "Education", "Other"]
+        },
+        {
+          "type": "buttongroup",
+          "name": "teamSize",
+          "title": "Team size",
+          "choices": [
+            { "value": "1-5", "text": "1–5" },
+            { "value": "6-20", "text": "6–20" },
+            { "value": "21-100", "text": "21–100" },
+            { "value": "100+", "text": "100+" }
+          ]
+        },
+        {
+          "type": "rating",
+          "name": "nps",
+          "title": "How likely are you to recommend us? (0-10)",
+          "rateMin": 0,
+          "rateMax": 10,
+          "minRateDescription": "Not likely",
+          "maxRateDescription": "Very likely"
+        },
+        {
+          "type": "rating",
+          "name": "nps_custom",
+          "title": "How likely are you to recommend us? (1-5)",
+          "rateMin": 1,
+          "rateMax": 5,
+          "minRateDescription": "Highly unlikely",
+          "maxRateDescription": "Very likely"
+        },
+        {
+          "type": "rating",
+          "name": "satisfaction",
+          "title": "How satisfied are you? (Smileys + Color)",
+          "rateType": "smileys",
+          "scaleColorMode": "colored"
+        },
+        {
+          "type": "rating",
+          "name": "uxRating",
+          "title": "Rate the UX (Stars)",
+          "rateType": "stars",
+          "rateValues": [1, 2, 3, 4, 5]
+        },
+        {
+          "type": "rating",
+          "name": "experience",
+          "title": "How was your experience? (Labels)",
+          "rateType": "labels",
+          "rateValues": [
+            { "value": 1, "text": "Terrible" },
+            { "value": 2, "text": "Bad" },
+            { "value": 3, "text": "Average" },
+            { "value": 4, "text": "Good" },
+            { "value": 5, "text": "Excellent" }
+          ]
+        },
+        {
+          "type": "rating",
+          "name": "experience2",
+          "title": "How was your experience? (Labels - Text)",
+          "rateType": "labels",
+          "rateValues": [
+            { "value": "Terrible" },
+            { "value": "Bad" },
+            { "value": "Average" },
+            { "value": "Good" },
+            { "value": "Excellent" }
+          ]
+        },
+        {
+          "type": "radiogroup",
+          "name": "primaryUseCase",
+          "title": "Primary use case",
+          "isRequired": true,
+          "choices": ["Onboarding", "Compliance", "Market research", "Internal tools", "Other"]
+        },
+        {
+          "type": "checkbox",
+          "name": "featurePriorities",
+          "title": "Top priorities (pick all that apply)",
+          "choices": ["Accessibility", "Theme customization", "Performance", "Developer experience"]
+        },
+        {
+          "type": "tagbox",
+          "name": "techStack",
+          "title": "Tech stack tags",
+          "choices": ["React", "Next.js", "Vite", "TypeScript", "Node.js"]
+        },
+        {
+          "type": "imagepicker",
+          "name": "persona",
+          "title": "Choose a persona (image picker)",
+          "choices": [
+            {
+              "value": "dev",
+              "text": "Developer",
+              "imageLink": "https://placehold.co/240x160/png?text=Developer"
+            },
+            {
+              "value": "pm",
+              "text": "Product",
+              "imageLink": "https://placehold.co/240x160/png?text=Product"
+            },
+            {
+              "value": "design",
+              "text": "Design",
+              "imageLink": "https://placehold.co/240x160/png?text=Design"
+            }
+          ]
+        },
+        {
+          "type": "flowpanel",
+          "title": "Quick checklist (flowpanel)",
+          "elements": [
+            {
+              "type": "boolean",
+              "name": "needsA11y",
+              "title": "Needs accessibility support"
+            },
+            {
+              "type": "boolean",
+              "name": "needsDarkMode",
+              "title": "Needs dark mode theme"
+            },
+            {
+              "type": "text",
+              "name": "deploymentTarget",
+              "title": "Deployment target (web/mobile/desktop)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "structured",
+      "title": "Structured inputs",
+      "elements": [
+        {
+          "type": "matrix",
+          "name": "satisfactionMatrix",
+          "title": "Satisfaction by area (matrix)",
+          "isRequired": true,
+          "columns": [
+            { "value": "1", "text": "Poor" },
+            { "value": "2", "text": "OK" },
+            { "value": "3", "text": "Good" }
+          ],
+          "rows": [
+            { "value": "docs", "text": "Documentation" },
+            { "value": "api", "text": "API" },
+            { "value": "ui", "text": "UI components" }
+          ]
+        },
+        {
+          "type": "ranking",
+          "name": "ranking",
+          "title": "Rank what matters most (ranking)",
+          "choices": ["Speed", "Accessibility", "Theme", "Animations"]
+        },
+        {
+          "type": "ranking",
+          "name": "rankingSelect",
+          "title": "Rank your top 3 fruits (select to rank)",
+          "selectToRankEnabled": true,
+          "selectToRankAreasLayout": "horizontal",
+          "minSelectedChoices": 3,
+          "maxSelectedChoices": 3,
+          "choices": ["Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"]
+        },
+        {
+          "type": "matrixdropdown",
+          "name": "matrixDropdown",
+          "title": "Matrix Dropdown (placeholder demo)",
+          "columns": [
+            { "name": "priority", "title": "Priority" },
+            { "name": "owner", "title": "Owner" }
+          ],
+          "rows": ["Item A", "Item B"]
+        },
+        {
+          "type": "matrixdynamic",
+          "name": "matrixDynamic",
+          "title": "Matrix Dynamic (placeholder demo)",
+          "columns": [{ "name": "name", "title": "Name" }, { "name": "value", "title": "Value" }]
+        },
+        {
+          "type": "paneldynamic",
+          "name": "contacts",
+          "title": "Emergency contacts (paneldynamic)",
+          "panelCount": 1,
+          "templateElements": [
+            { "type": "text", "name": "name", "title": "Name", "isRequired": true },
+            { "type": "text", "name": "phone", "title": "Phone" },
+            { "type": "dropdown", "name": "relation", "title": "Relationship", "choices": ["Family", "Friend", "Colleague"] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "uploads",
+      "title": "Uploads & consent",
+      "elements": [
+        {
+          "type": "file",
+          "name": "supportingDoc",
+          "title": "Upload a supporting document (file)"
+        },
+        {
+          "type": "signaturepad",
+          "name": "signature",
+          "title": "Sign to confirm (signaturepad)"
+        },
+        {
+          "type": "comment",
+          "name": "notes",
+          "title": "Final notes (comment)",
+          "isRequired": true,
+          "maxWordCount": 120
+        },
+        {
+          "type": "empty",
+          "name": "emptyPlaceholder"
+        }
+      ]
+    }
+  ]
+}

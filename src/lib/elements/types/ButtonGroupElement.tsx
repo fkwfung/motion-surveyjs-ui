@@ -3,13 +3,12 @@ import { motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
-import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 
 export function ButtonGroupElement({ question, opts }: { question: Question; opts: RenderOptions }) {
   const q = question as unknown as { visibleChoices?: ChoiceItem[] }
-  const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
   const choices = q.visibleChoices ?? []
   const currentStr = question.value == null ? '' : String(question.value)
@@ -18,8 +17,7 @@ export function ButtonGroupElement({ question, opts }: { question: Question; opt
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
 
       <div className="msj__buttonGroup">

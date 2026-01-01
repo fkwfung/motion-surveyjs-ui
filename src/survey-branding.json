@@ -1,0 +1,53 @@
+{
+  "title": "Branding Demo",
+  "logo": "https://placehold.co/1200x120/2563eb/white?text=BRAND+HEADER",
+  "logoWidth": "100%",
+  "logoHeight": 120,
+  "logoPosition": "top",
+  "logoFit": "cover",
+  "backgroundImage": "https://placehold.co/1920x1080/f0f0f0/ccc?text=Background",
+  "backgroundImageFit": "cover",
+  "backgroundImageAttachment": "fixed",
+  "backgroundOpacity": 0.5,
+  "pages": [
+    {
+      "name": "page1",
+      "title": "Page 1: Introduction",
+      "elements": [
+        {
+          "type": "html",
+          "name": "banner",
+          "html": "<div style='background: #2563eb; color: white; padding: 20px; border-radius: 8px; text-align: center;'><h1>Welcome to the Branded Survey</h1><p>This survey demonstrates logo positioning and background images.</p></div>"
+        },
+        {
+          "type": "text",
+          "name": "q1",
+          "title": "What is your name?"
+        }
+      ]
+    },
+    {
+      "name": "page2",
+      "title": "Page 2: Details",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "q2",
+          "title": "Do you like the logo?",
+          "choices": ["Yes", "No", "It's okay"]
+        }
+      ]
+    },
+    {
+      "name": "page3",
+      "title": "Page 3: Conclusion",
+      "elements": [
+        {
+          "type": "comment",
+          "name": "q3",
+          "title": "Any feedback on the branding?"
+        }
+      ]
+    }
+  ]
+}

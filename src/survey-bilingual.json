@@ -1,0 +1,41 @@
+{
+  "title": "Bilingual Survey (English / Traditional Chinese)",
+  "description": "This survey demonstrates multi-line text for bilingual support without using the locale feature.\n本問卷展示如何在不使用多語言功能的情況下，通過多行文字支持雙語顯示。",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "text",
+          "name": "name",
+          "title": "What is your full name?\n請問您的全名是？",
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "satisfaction",
+          "title": "How satisfied are you with our service?\n您對我們的服務滿意嗎？",
+          "choices": [
+            {
+              "value": "satisfied",
+              "text": "Satisfied\n滿意"
+            },
+            {
+              "value": "neutral",
+              "text": "Neutral\n一般"
+            },
+            {
+              "value": "dissatisfied",
+              "text": "Dissatisfied\n不滿意"
+            }
+          ]
+        },
+        {
+          "type": "comment",
+          "name": "feedback",
+          "title": "Do you have any other feedback?\n您還有其他意見嗎？"
+        }
+      ]
+    }
+  ]
+}

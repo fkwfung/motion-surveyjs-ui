@@ -5,11 +5,10 @@ import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
 import { getQuestionErrors } from '../getQuestionErrors'
-import { getQuestionTitle } from '../getQuestionTitle'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 
 export function SignaturePadElement({ question, opts }: { question: Question; opts: RenderOptions }) {
-  const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -85,8 +84,7 @@ export function SignaturePadElement({ question, opts }: { question: Question; op
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
 
       <div className="msj__signaturePadWrap">

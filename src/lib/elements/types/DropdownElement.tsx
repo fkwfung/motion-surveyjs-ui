@@ -5,8 +5,9 @@ import { AnimatePresence, motion } from 'motion/react'
 import { BaseElement } from '../../ui/BaseElement'
 import { Errors } from '../../ui/Errors'
 import type { RenderOptions } from '../../ui/types'
-import { getQuestionTitle } from '../getQuestionTitle'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
+import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 
 export function DropdownElement({
@@ -34,8 +35,7 @@ export function DropdownElement({
   return (
     <BaseElement element={q} opts={opts}>
       <div className="msj__label">
-        {title}
-        {q.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={q} opts={opts} />
       </div>
 
       <Select.Root

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from
 import { Model, Question, type IElement } from 'survey-core'
 import { AnimatePresence, motion } from 'motion/react'
 import { renderElement } from './elements/renderElement'
+import { Logo } from './ui/Logo'
 import { createTranslator } from './i18n/messages'
 import type { Messages } from './i18n/messages'
 import type { RenderOptions } from './ui/types'
@@ -128,6 +129,22 @@ export function MotionSurvey({
     .filter(Boolean)
     .join(' ')
 
+  const logoPosition = (survey as unknown as { logoPosition?: string }).logoPosition ?? 'left'
+
+  const bgImage = (survey as unknown as { backgroundImage?: string }).backgroundImage
+  const bgFit = (survey as unknown as { backgroundImageFit?: 'auto' | 'contain' | 'cover' }).backgroundImageFit ?? 'auto'
+  const bgAttachment = (survey as unknown as { backgroundImageAttachment?: 'scroll' | 'fixed' }).backgroundImageAttachment ?? 'scroll'
+  const bgOpacity = (survey as unknown as { backgroundOpacity?: number }).backgroundOpacity ?? 1
+
+  const bgStyle: React.CSSProperties | undefined = bgImage
+    ? {
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: bgFit,
+        backgroundAttachment: bgAttachment,
+        opacity: bgOpacity,
+      }
+    : undefined
+
   useEffect(() => {
     const rerender = () => forceUpdate()
     const onPageChanged = () => {
@@ -176,12 +193,38 @@ export function MotionSurvey({
     focusEl?.focus({ preventScroll: true })
   })
 
-  if (survey.state === 'completed') {
+  if (survey.state === 'loading') {
+    const loadingHtml = (survey as unknown as { loadingHtml?: string }).loadingHtml
     return (
       <div className={rootClassName}>
         <div className="msj__card">
-          <h2 className="msj__title">{t('thanksTitle')}</h2>
-          <div className="msj__hint">{t('thanksHint')}</div>
+          {loadingHtml ? (
+            <div dangerouslySetInnerHTML={{ __html: loadingHtml }} />
+          ) : (
+            <div className="msj__hint">Loading...</div>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  if (survey.state === 'completed') {
+    // SurveyJS processes completedHtmlOnCondition automatically into completedHtml
+    const completedHtml = (survey as unknown as { completedHtml?: string }).completedHtml
+    const completedBeforeHtml = (survey as unknown as { completedBeforeHtml?: string }).completedBeforeHtml
+
+    return (
+      <div className={rootClassName}>
+        <div className="msj__card">
+          {completedBeforeHtml ? <div dangerouslySetInnerHTML={{ __html: completedBeforeHtml }} /> : null}
+          {completedHtml ? (
+            <div dangerouslySetInnerHTML={{ __html: completedHtml }} />
+          ) : (
+            <>
+              <h2 className="msj__title">{t('thanksTitle')}</h2>
+              <div className="msj__hint">{t('thanksHint')}</div>
+            </>
+          )}
         </div>
       </div>
     )
@@ -359,7 +402,9 @@ export function MotionSurvey({
 
   return (
     <div className={rootClassName} ref={setPortalContainer}>
+      {bgStyle ? <div className="msj__background" style={bgStyle} /> : null}
       <div className="msj__card">
+        {logoPosition !== 'bottom' ? <Logo survey={survey} /> : null}
         {survey.title ? <h2 className="msj__title">{survey.title}</h2> : null}
 
         {renderNav('top')}
@@ -448,6 +493,7 @@ export function MotionSurvey({
         </AnimatePresence>
 
         {renderNav('bottom')}
+        {logoPosition === 'bottom' ? <Logo survey={survey} /> : null}
       </div>
     </div>
   )

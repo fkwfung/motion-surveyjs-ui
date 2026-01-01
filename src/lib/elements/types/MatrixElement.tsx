@@ -4,8 +4,8 @@ import * as Checkbox from '@radix-ui/react-checkbox'
 import { BaseElement } from '../../ui/BaseElement'
 import type { RenderOptions } from '../../ui/types'
 import { Errors } from '../../ui/Errors'
+import { QuestionTitle } from '../../ui/QuestionTitle'
 import { getQuestionErrors } from '../getQuestionErrors'
-import { getQuestionTitle } from '../getQuestionTitle'
 import { setQuestionValue } from '../setQuestionValue'
 import { Checkmark } from '../../ui/Checkmark'
 import { motion } from 'motion/react'
@@ -22,7 +22,6 @@ export function MatrixElement({ question, opts }: { question: Question; opts: Re
     isRequired?: boolean
   }
 
-  const title = getQuestionTitle(question, opts)
   const errors = opts.validationSeq > 0 ? getQuestionErrors(question) : []
   const rows = (q as unknown as { rows?: MatrixRow[] }).rows ?? q.visibleRows ?? []
   const cols = (q as unknown as { columns?: MatrixColumn[] }).columns ?? q.visibleColumns ?? []
@@ -33,8 +32,7 @@ export function MatrixElement({ question, opts }: { question: Question; opts: Re
   return (
     <BaseElement element={question} opts={opts}>
       <div className="msj__label">
-        {title}
-        {question.isRequired ? <span aria-hidden> *</span> : null}
+        <QuestionTitle element={question} opts={opts} />
       </div>
 
       <div className="msj__matrix" style={{ ['--msj-matrix-cols' as never]: String(cols.length) } as never}>
