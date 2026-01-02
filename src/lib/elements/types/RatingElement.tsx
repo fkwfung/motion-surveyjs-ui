@@ -42,59 +42,60 @@ export function RatingElement({ question, opts }: { question: Question; opts: Re
       <div className="msj__label">
         <QuestionTitle element={question} opts={opts} />
       </div>
-      <div className="msj__rating" data-type={rateType} data-color-mode={scaleColorMode}>
-        {minDescription && !displayAsExtreme ? (
-          <span className="msj__ratingDescription msj__ratingDescription--min">{minDescription}</span>
-        ) : null}
+      <div className="msj__ratingWrapper">
+        <div className="msj__rating" data-type={rateType} data-color-mode={scaleColorMode}>
+          {values.map((iv, idx) => {
+            const valueStr = String(iv.value)
+            let text = iv.text ?? valueStr
+            
+            if (displayAsExtreme) {
+              if (idx === 0 && minDescription) text = minDescription
+              if (idx === values.length - 1 && maxDescription) text = maxDescription
+            }
 
-        {values.map((iv, idx) => {
-          const valueStr = String(iv.value)
-          let text = iv.text ?? valueStr
-          
-          if (displayAsExtreme) {
-            if (idx === 0 && minDescription) text = minDescription
-            if (idx === values.length - 1 && maxDescription) text = maxDescription
-          }
+            const selected = current === valueStr
+            const highlighted = rateType === 'stars' && selectedIdx >= 0 ? idx <= selectedIdx : selected
+            
+            let style: React.CSSProperties | undefined
+            if (scaleColorMode === 'colored') {
+               const hue = values.length > 1 ? (idx / (values.length - 1)) * 120 : 60
+               style = { '--msj-rating-color': `hsl(${hue}, 70%, 50%)` } as React.CSSProperties
+            }
 
-          const selected = current === valueStr
-          const highlighted = rateType === 'stars' && selectedIdx >= 0 ? idx <= selectedIdx : selected
-          
-          let style: React.CSSProperties | undefined
-          if (scaleColorMode === 'colored') {
-             const hue = values.length > 1 ? (idx / (values.length - 1)) * 120 : 60
-             style = { '--msj-rating-color': `hsl(${hue}, 70%, 50%)` } as React.CSSProperties
-          }
+            return (
+              <motion.button
+                key={valueStr}
+                type="button"
+                className="msj__ratingItem"
+                onClick={() => setQuestionValue(question, iv.value)}
+                layout
+                transition={{ duration: opts.duration }}
+                aria-label={text}
+                style={style}
+              >
+                {selected ? (
+                  <motion.span
+                    className="msj__ratingItemBg"
+                    layoutId={bgLayoutId}
+                    transition={{ type: 'spring', stiffness: 700, damping: 40 }}
+                  />
+                ) : null}
 
-          return (
-            <motion.button
-              key={valueStr}
-              type="button"
-              className="msj__ratingItem"
-              onClick={() => setQuestionValue(question, iv.value)}
-              layout
-              transition={{ duration: opts.duration }}
-              aria-label={text}
-              style={style}
-            >
-              {selected ? (
-                <motion.span
-                  className="msj__ratingItemBg"
-                  layoutId={bgLayoutId}
-                  transition={{ type: 'spring', stiffness: 700, damping: 40 }}
-                />
-              ) : null}
+                <span className="msj__ratingItemContent">
+                  {rateType === 'stars' ? <StarIcon active={highlighted} /> : null}
+                  {rateType === 'smileys' ? <SmileyIcon idx={idx} total={values.length} /> : null}
+                  {rateType === 'labels' ? text : null}
+                </span>
+              </motion.button>
+            )
+          })}
+        </div>
 
-              <span className="msj__ratingItemContent">
-                {rateType === 'stars' ? <StarIcon active={highlighted} /> : null}
-                {rateType === 'smileys' ? <SmileyIcon idx={idx} total={values.length} /> : null}
-                {rateType === 'labels' ? text : null}
-              </span>
-            </motion.button>
-          )
-        })}
-
-        {maxDescription && !displayAsExtreme ? (
-          <span className="msj__ratingDescription msj__ratingDescription--max">{maxDescription}</span>
+        {!displayAsExtreme && (minDescription || maxDescription) ? (
+          <div className="msj__ratingDescriptions">
+            <span className="msj__ratingDescription">{minDescription}</span>
+            <span className="msj__ratingDescription">{maxDescription}</span>
+          </div>
         ) : null}
       </div>
       <Errors errors={errors} opts={opts} />

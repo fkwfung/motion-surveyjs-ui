@@ -1,0 +1,182 @@
+{
+    "pages": [
+        {
+            "elements": [
+                {
+                    "choices": [
+                        "None",
+                        "1 to 2 times",
+                        "3 to 5 times",
+                        "More than 5 times"
+                    ],
+                    "name": "question_001",
+                    "title": "In the past 30 days, how many times have you purchased something online using your smartphone?",
+                    "type": "radiogroup"
+                },
+                {
+                    "choices": [
+                        "Credit or Debit Card",
+                        "Digital Wallet (e.g., Apple Pay, Google Pay)",
+                        "Buy Now, Pay Later (e.g., Afterpay, Klarna)",
+                        "Bank Transfer"
+                    ],
+                    "name": "question_002",
+                    "title": "When you reach the checkout page, which payment method do you use most frequently?",
+                    "type": "radiogroup"
+                },
+                {
+                    "choices": [
+                        "Yes, I spent several minutes looking",
+                        "I did a quick search",
+                        "No, I just wanted to finish the transaction",
+                        "I only use codes if they are automatically applied"
+                    ],
+                    "name": "question_003",
+                    "title": "Think about the last time you bought something online. Did you actively search for a discount code or rewards opportunity before paying?",
+                    "type": "radiogroup"
+                },
+                {
+                    "choices": [
+                        "Every time I shop",
+                        "Only for large purchases",
+                        "Rarely",
+                        "Never"
+                    ],
+                    "name": "question_004",
+                    "title": "How often do you currently use cashback apps or loyalty programs when shopping?",
+                    "type": "radiogroup"
+                }
+            ],
+            "name": "page_001"
+        },
+        {
+            "elements": [
+                {
+                    "name": "question_005",
+                    "rateValues": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                    ],
+                    "title": "How frustrating is it when you realize you missed a discount after completing a purchase?",
+                    "type": "rating"
+                },
+                {
+                    "name": "question_006",
+                    "title": "What is the hardest part about managing different rewards, points, or cashback programs?",
+                    "type": "comment"
+                },
+                {
+                    "name": "question_007",
+                    "rateValues": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                    ],
+                    "title": "Compared to other shopping tools you've tried, how much time do you feel is wasted manually hunting for valid promo codes?",
+                    "type": "rating"
+                },
+                {
+                    "choices": [
+                        "Always",
+                        "Most of the time",
+                        "Occasionally",
+                        "Rarely",
+                        "Never"
+                    ],
+                    "name": "question_008",
+                    "title": "When using a mobile payment gateway, how often do you feel like you are getting the 'best possible price'?",
+                    "type": "radiogroup"
+                },
+                {
+                    "name": "question_009",
+                    "title": "What is the one thing you wish worked better when you are redirected to a payment screen?",
+                    "type": "comment"
+                }
+            ],
+            "name": "page_002"
+        },
+        {
+            "elements": [
+                {
+                    "name": "question_010",
+                    "rateValues": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                    ],
+                    "title": "Based on the description above, how valuable would this service be for your daily shopping?",
+                    "type": "rating"
+                },
+                {
+                    "name": "question_011",
+                    "title": "Imagine this existed today—how would it change your approach to online shopping?",
+                    "type": "comment"
+                },
+                {
+                    "choices": [
+                        "The automatic nature (no searching for codes)",
+                        "The guaranteed savings (1% to 5% back)",
+                        "Having all my rewards in one central app",
+                        "The speed of the transaction"
+                    ],
+                    "name": "question_012",
+                    "title": "Which of these benefits matters most to you?",
+                    "type": "radiogroup"
+                },
+                {
+                    "choices": [
+                        "Yes, definitely",
+                        "Probably",
+                        "Not sure / Need more info",
+                        "Probably not",
+                        "Definitely not"
+                    ],
+                    "name": "question_013",
+                    "title": "To receive these automatic discounts, would you be willing to route your payments through the Shopback portal?",
+                    "type": "radiogroup"
+                },
+                {
+                    "choices": [
+                        "An extra 5-10 seconds at checkout",
+                        "Sharing your shopping category preferences",
+                        "Receiving notifications about new deals",
+                        "Nothing, it must be perfectly seamless"
+                    ],
+                    "name": "question_014",
+                    "title": "What would you be willing to 'give up' or tolerate to have this feature?",
+                    "type": "checkbox"
+                },
+                {
+                    "name": "question_015",
+                    "rateValues": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                    ],
+                    "title": "If this app required a small monthly 'premium' fee to unlock higher cashback tiers (up to 10%), how likely would you be to pay for it?",
+                    "type": "rating"
+                },
+                {
+                    "name": "question_016",
+                    "title": "What is the biggest benefit or 'win' you see in this solution?",
+                    "type": "comment"
+                },
+                {
+                    "name": "question_017",
+                    "title": "Is there anything else you’d want this solution to do for you to make it even more useful?",
+                    "type": "comment"
+                }
+            ],
+            "name": "page_003"
+        }
+    ]
+}
