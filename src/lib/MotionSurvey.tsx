@@ -120,7 +120,7 @@ export function MotionSurvey({
   const duration = animationDurationMs / 1000
   const t = useMemo(() => createTranslator({ locale, messages }), [locale, messages])
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
-  const rootRef = useRef<HTMLDivElement>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
 
   const rootClassName = [
     'msj',
@@ -414,7 +414,6 @@ export function MotionSurvey({
     <div
       className={rootClassName}
       ref={(node) => {
-        // @ts-ignore
         rootRef.current = node
         setPortalContainer(node)
       }}
