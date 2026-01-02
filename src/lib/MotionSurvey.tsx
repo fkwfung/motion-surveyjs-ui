@@ -159,7 +159,7 @@ export function MotionSurvey({
             rootRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }
         } catch {
-          if (rootRef.current && typeof rootRef.current.scrollIntoView === 'function') {
+          if (typeof rootRef.current.scrollIntoView === 'function') {
             rootRef.current.scrollIntoView()
           }
         }
