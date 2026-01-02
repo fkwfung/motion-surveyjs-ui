@@ -120,6 +120,7 @@ export function MotionSurvey({
   const duration = animationDurationMs / 1000
   const t = useMemo(() => createTranslator({ locale, messages }), [locale, messages])
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
 
   const rootClassName = [
     'msj',
@@ -150,6 +151,15 @@ export function MotionSurvey({
     const onPageChanged = () => {
       dispatchValidation({ type: 'setPage', pageName: survey.currentPage?.name ?? null })
       rerender()
+      
+      // Scroll to top of survey container
+      if (rootRef.current) {
+        try {
+          rootRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        } catch {
+          rootRef.current.scrollIntoView()
+        }
+      }
     }
     const handleComplete = () => {
       onComplete?.(survey.data as Record<string, unknown>, survey)
@@ -196,7 +206,7 @@ export function MotionSurvey({
   if (survey.state === 'loading') {
     const loadingHtml = (survey as unknown as { loadingHtml?: string }).loadingHtml
     return (
-      <div className={rootClassName}>
+      <div className={rootClassName} ref={rootRef}>
         <div className="msj__card">
           {loadingHtml ? (
             <div dangerouslySetInnerHTML={{ __html: loadingHtml }} />
@@ -214,7 +224,7 @@ export function MotionSurvey({
     const completedBeforeHtml = (survey as unknown as { completedBeforeHtml?: string }).completedBeforeHtml
 
     return (
-      <div className={rootClassName}>
+      <div className={rootClassName} ref={rootRef}>
         <div className="msj__card">
           {completedBeforeHtml ? <div dangerouslySetInnerHTML={{ __html: completedBeforeHtml }} /> : null}
           {completedHtml ? (
@@ -401,7 +411,14 @@ export function MotionSurvey({
   }
 
   return (
-    <div className={rootClassName} ref={setPortalContainer}>
+    <div
+      className={rootClassName}
+      ref={(node) => {
+        // @ts-ignore
+        rootRef.current = node
+        setPortalContainer(node)
+      }}
+    >
       {bgStyle ? <div className="msj__background" style={bgStyle} /> : null}
       <div className="msj__card">
         {logoPosition !== 'bottom' ? <Logo survey={survey} /> : null}
