@@ -6,8 +6,9 @@ import surveyBranding from './survey-branding.json'
 import surveyLocale from './survey-locale.json'
 import surveyHtml from './survey-html.json'
 import surveyBilingual from './survey-bilingual.json'
+import surveySample from './survey-sample.json'
 
-type SurveyType = 'feature' | 'branding' | 'locale' | 'html' | 'bilingual' | null
+type SurveyType = 'feature' | 'branding' | 'locale' | 'html' | 'bilingual' | 'sample' | null
 
 function App() {
   const [activeSurvey, setActiveSurvey] = useState<SurveyType>(null)
@@ -20,6 +21,7 @@ function App() {
       case 'locale': return surveyLocale
       case 'html': return surveyHtml
       case 'bilingual': return surveyBilingual
+      case 'sample': return surveySample
       default: return {}
     }
   }
@@ -48,6 +50,10 @@ function App() {
           <button onClick={() => setActiveSurvey('html')} className="demo-card">
             <h3>HTML Rendering</h3>
             <p>Custom HTML for questions, completion, and loading states.</p>
+          </button>
+          <button onClick={() => setActiveSurvey('sample')} className="demo-card">
+            <h3>Sample Survey</h3>
+            <p>Real-world example with multiple pages and question types.</p>
           </button>
         </div>
       </div>
