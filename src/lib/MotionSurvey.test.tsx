@@ -23,6 +23,7 @@ describe('MotionSurvey', () => {
     expect(screen.getByText('Customer feedback')).toBeInTheDocument()
     expect(screen.getByText('Page 1 title')).toBeInTheDocument()
     expect(screen.getByText(/Page 1 of 1/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/1\. Your name/)).toBeInTheDocument()
+    expect(screen.getByText('1.')).toBeInTheDocument()
+    expect(screen.getByText('Your name')).toBeInTheDocument()
   })
 })

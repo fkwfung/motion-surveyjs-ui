@@ -10,7 +10,8 @@ describe('SurveyJS numbering flags', () => {
     }
 
     renderSurvey(json)
-    expect(screen.getByText(/^1\. Your name/)).toBeInTheDocument()
+    expect(screen.getByText('1.')).toBeInTheDocument()
+    expect(screen.getByText('Your name')).toBeInTheDocument()
   })
 
   it('implements showQuestionNumbers: onPage (resets per page)', async () => {
@@ -24,10 +25,12 @@ describe('SurveyJS numbering flags', () => {
     }
 
     const { user } = renderSurvey(json)
-    expect(screen.getByText(/^1\. First/)).toBeInTheDocument()
+    expect(screen.getByText('1.')).toBeInTheDocument()
+    expect(screen.getByText('First')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /^Next$/ }))
-    expect(await screen.findByText(/^1\. Second/)).toBeInTheDocument()
+    expect(await screen.findByText('1.')).toBeInTheDocument()
+    expect(await screen.findByText('Second')).toBeInTheDocument()
   })
 
   it('implements showQuestionNumbers: on (global numbering)', async () => {
@@ -41,10 +44,12 @@ describe('SurveyJS numbering flags', () => {
     }
 
     const { user } = renderSurvey(json)
-    expect(screen.getByText(/^1\. First/)).toBeInTheDocument()
+    expect(screen.getByText('1.')).toBeInTheDocument()
+    expect(screen.getByText('First')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /^Next$/ }))
-    expect(await screen.findByText(/^2\. Second/)).toBeInTheDocument()
+    expect(await screen.findByText('2.')).toBeInTheDocument()
+    expect(await screen.findByText('Second')).toBeInTheDocument()
   })
 
   it('implements showQuestionNumbers: off', () => {

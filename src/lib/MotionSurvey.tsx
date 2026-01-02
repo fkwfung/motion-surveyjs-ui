@@ -155,9 +155,13 @@ export function MotionSurvey({
       // Scroll to top of survey container
       if (rootRef.current) {
         try {
-          rootRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          if (typeof rootRef.current.scrollIntoView === 'function') {
+            rootRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
         } catch {
-          rootRef.current.scrollIntoView()
+          if (rootRef.current && typeof rootRef.current.scrollIntoView === 'function') {
+            rootRef.current.scrollIntoView()
+          }
         }
       }
     }
