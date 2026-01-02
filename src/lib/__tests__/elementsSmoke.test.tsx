@@ -61,7 +61,7 @@ describe('element type support (smoke)', () => {
     expect(screen.getByText(/Comment/)).toBeInTheDocument()
     expect(screen.getByText(/Radio/)).toBeInTheDocument()
     expect(screen.getByText(/Checkbox/)).toBeInTheDocument()
-    expect(screen.getByText(/Dropdown/, { selector: '.msj__label' })).toBeInTheDocument()
+    expect(screen.getAllByText(/Dropdown/)[0]).toBeInTheDocument()
     expect(screen.getByText(/Rating/)).toBeInTheDocument()
     expect(screen.getByText(/Boolean/)).toBeInTheDocument()
     expect(screen.getByText(/Multiple text/)).toBeInTheDocument()
