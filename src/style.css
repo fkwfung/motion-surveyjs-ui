@@ -367,7 +367,7 @@
 
 .msj__choiceList {
   display: grid;
-  gap: 10px;
+  gap: 6px;
 }
 
 .msj__choiceList .msj__choice {
@@ -600,11 +600,34 @@
   align-items: center;
 }
 
+.msj__ratingWrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  width: fit-content;
+  min-width: min-content;
+}
+
+.msj__ratingDescriptions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+
+.msj__ratingDescription {
+  font-size: 12px;
+  color: var(--msj-muted);
+  line-height: 1.2;
+}
+
 .msj__ratingItem {
   position: relative;
   border: 1px solid var(--msj-border);
   border-radius: 10px;
   padding: 10px 12px;
+  min-width: 48px;
   background: white;
   cursor: pointer;
   display: flex;
