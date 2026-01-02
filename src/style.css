@@ -601,9 +601,11 @@
 }
 
 .msj__ratingWrapper {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   gap: 6px;
+  width: fit-content;
+  min-width: min-content;
 }
 
 .msj__ratingDescriptions {
